@@ -1,0 +1,6 @@
+tasks:
+  - init: cd ./moveit && yarn install
+    command: yarn start
+ports:
+  - port: 3000
+    onOpen: open-preview
