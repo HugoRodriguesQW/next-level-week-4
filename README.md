@@ -16,7 +16,7 @@
  ```shell 
  git clone https://github.com/HugoRodriguesQW/next-level-week-4.git nlw4 && cd nlw4
  ```
- ##### Entre na pasta do projeto e instale as dependências e inicie:
+ ##### Entre na pasta do projeto, instale as dependências e inicie:
  ```shell 
  cd ./moveit-whats && yarn install &&  yarn start
  ```
