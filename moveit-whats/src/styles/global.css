@@ -43,13 +43,13 @@ a {
 
 /*== Media Queries ==*/
 @media screen and (max-width: 1000px) {
-  :root {
+  html {
     font-size: 93.75%;
   }
 }
 
 @media screen and (max-width: 720px) {
-  :root {
-    font-size: 93.75%;
+  html {
+    font-size: 85.75%;
   }
 }
