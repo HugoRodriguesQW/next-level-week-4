@@ -22,7 +22,7 @@ type ChallengesContextData = {
   closeUpLevelModal: () => void;
 }
 
-type ChallengesProviderProps = {
+interface ChallengesProviderProps  {
   children: ReactNode;
   currentExperience: number;
   level: number;
