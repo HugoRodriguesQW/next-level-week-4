@@ -1,12 +1,12 @@
 .container {
   height: 100vh;
-  max-width: 992px;
+  max-width: 850px;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 2rem;
 
   display: flex;
   flex-direction: column;
-
+  flex-wrap: wrap;
 }
 
 .container section {
@@ -16,4 +16,16 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 6.25rem;
   align-content: center;
+}
+
+@media screen and (max-width: 704px) {
+  .container {
+    display: block;
+  }
+
+  .container section {
+    margin: 6rem 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
 }

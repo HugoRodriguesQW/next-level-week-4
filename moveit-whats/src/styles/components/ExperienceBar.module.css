@@ -26,4 +26,15 @@ span.currentExperience {
   position: absolute;
   top: 12px;
   transform: translateX(-50%);
+  min-width: 1rem;
+}
+
+@media screen and (max-width: 704px) {
+  .experienceBar {
+    position: fixed;
+    top: 0;
+    width: 90vw;
+    padding: 2rem .8rem;
+    background: var(--background);
+  }
 }
