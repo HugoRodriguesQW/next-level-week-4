@@ -1,5 +1,4 @@
 <p align="center">
-<img src="https://img.shields.io/github/license/HugoRodriguesQW/next-level-week-4?color=brown">
 <img src="https://img.shields.io/github/languages/count/hugorodriguesqw/next-level-week-4">
 <img src="https://img.shields.io/github/languages/top/hugorodriguesqw/next-level-week-4">
 <img src="https://img.shields.io/github/repo-size/HugoRodriguesQW/next-level-week-4">
