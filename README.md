@@ -8,7 +8,7 @@
 ## <span><img src="https://github.com/HugoRodriguesQW/next-level-week-4/blob/main/moveit-whats/public/favicon.png" width="20px"></span> Move.it - Next Level Week 4 - Trilha React
 <span align="justify">
   <img title="Trilha React" alt="Trilha React NLW4" src="http://i3.ytimg.com/vi/ArqCBqN7zzc/maxresdefault.jpg" width="48%">
-  <img title="Trilha React" alt="Trilha React NLW4" src="https://uploaddeimagens.com.br/images/003/098/713/original/2021-02-24-161753_1366x768_scrot.png" width="48%">
+  <img title="Trilha React" alt="Trilha React NLW4" src="https://uploaddeimagens.com.br/images/003/103/145/full/Screenshot_2021-02-26_In%C3%ADco_MoveIt.png" width="48%">
  </span>
   
  ### Para iniciar 🚀:
@@ -18,5 +18,5 @@
  ```
  ##### Entre na pasta do projeto, instale as dependências e inicie:
  ```shell 
- cd ./moveit-whats && yarn install &&  yarn start
+ cd ./moveit-whats && yarn &&  yarn start
  ```
