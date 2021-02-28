@@ -1,16 +1,9 @@
-import Head from 'next/head';
 import {GetServerSideProps} from 'next'
 
-import { ExperienceBar } from '../components/ExperienceBar';
-import { Profile } from '../components/Profile';
-import { CompletedChallenges } from '../components/CompletedChallenges';
-import { Countdown } from '../components/Countdown';
-import { ChallengeBox } from '../components/ChallengeBox';
-
-import { CountdownProvider } from '../contexts/CountdownContext';
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-
-import styles from '../styles/pages/Home.module.css';
+import { useState } from 'react';
+import { HomeApp } from './home';
+import { Logon } from './logon';
+import { getUserWithGithubToken } from './api/login';
 
 type propsData = {
 currentExperience: number;
@@ -18,40 +11,20 @@ level: number;
 challengesCompleted: number;
 }
 
-export default function Home(props:propsData) {
-  return (
-    <ChallengesProvider
-    level={props.level}
-    currentExperience={props.currentExperience}
-    challengesCompleted={props.challengesCompleted}
-    >
-    <div className={styles.container}>
-      <Head>
-        <title>Iníco | MoveIt</title>
-      </Head>
+export default function Home (props:propsData) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-      <ExperienceBar />
-      
-      <CountdownProvider>
-      <section>
-        <div>
-          <Profile />
-          <CompletedChallenges />
-          <Countdown />
-        </div>
-        <div>
-          < ChallengeBox />
-        </div>
-      </section>
-      </CountdownProvider>
-    </div>
-    </ChallengesProvider>
+  return (
+    <>
+   {isLoggedIn? HomeApp(props) : Logon()}
+    </>
   )
   
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
+  console.info(ctx.query?.code)
   const {level,  currentExperience, 
   challengesCompleted} = ctx.req.cookies;
 
