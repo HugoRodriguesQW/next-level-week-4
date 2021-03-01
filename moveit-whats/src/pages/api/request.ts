@@ -7,11 +7,10 @@ function getCredentials(){
   return {
     client_id: process.env.GITHUB_ID,
     client_secret: process.env.GITHUB_SECRET,
-    redirect_uri: process.env.GITHUB_URI
   }
 }
 export default (req: NowRequest, res: NowResponse) => {
-  const {client_id, redirect_uri} = getCredentials()
+  const {client_id} = getCredentials()
   const url=`https://github.com/login/oauth/authorize?client_id=${client_id}`  
   res.redirect(url)
 }

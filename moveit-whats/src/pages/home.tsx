@@ -1,7 +1,7 @@
 import { ChallengesProvider } from "../contexts/ChallengesContext";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { CountdownProvider } from "../contexts/CountdownContext";
-import { Profile } from "../components/Profile";
+import { Profile, userDataProps } from "../components/Profile";
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
 import { ChallengeBox } from "../components/ChallengeBox";
@@ -11,6 +11,7 @@ import Head from "next/head";
 import styles from '../styles/pages/Home.module.css';
 
 interface HomeAppData {
+  userData: userDataProps;
   currentUser: string;
   currentExperience: number;
   level: number;
@@ -34,7 +35,12 @@ export function HomeApp (props:HomeAppData) {
       <CountdownProvider>
       <section>
         <div>
-          <Profile />
+          <Profile 
+            username={props.userData.username}
+            userImage={props.userData.userImage}
+            userId={props.userData.userId}
+            userToken={props.userData.userToken}
+           />
           <CompletedChallenges />
           <Countdown />
         </div>

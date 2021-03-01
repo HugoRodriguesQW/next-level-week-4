@@ -1,15 +1,17 @@
 import {GetServerSideProps} from 'next'
-
-import { useState } from 'react';
-import { HomeApp } from './home';
-import { Logon } from './logon';
-
-import dotenv from 'dotenv'
-import {NowRequest, NowResponse} from '@vercel/node'
 import { URLSearchParams } from 'url'
 import cookies from 'js-cookie'
 
+import { useState, useEffect } from 'react';
+import { HomeApp } from './home';
+import { Logon } from './logon';
+
+import { getCredentials, getGithubUser } from './api/login';
+import { userDataProps } from '../components/Profile';
+import { LeftBarMenu } from '../components/LeftBarMenu';
+
 type propsData = {
+userData: userDataProps;
 currentUser: string;
 currentExperience: number;
 level: number;
@@ -17,87 +19,57 @@ challengesCompleted: number;
 }
 
 export default function Home (props:propsData) {
-  if(props.currentUser) {
-    cookies.set('username', props.currentUser)
-    console.log(props.currentUser)
+  const [logged, setLogged] = useState(false)
+
+  const userData = props.userData
+  
+  for (const prop in props.userData){
+    if(userData[prop]){
+      cookies.set(prop, userData[prop],{expires:365})
+    }
   }
+
+  useEffect( ()=> {
+    if(window.location.search){
+    history.pushState({}, null, '/');
+    }
+    if( userData ) {
+    setLogged(true)
+    }
+  }, [])
+  
   
   return (
     <>
-   {props.currentUser? HomeApp(props) : Logon()}
+    <LeftBarMenu />
+   {logged? HomeApp(props) : HomeApp(props)}
     </>
   )
   
 }
 
-
-function getCredentials(){
-  dotenv.config()
-  return {
-    client_id: process.env.GITHUB_ID,
-    client_secret: process.env.GITHUB_SECRET,
-    redirect_uri: process.env.GITHUB_URI,
-    token: process.env.GITHUB_TOKEN
-  }
-}
-
-async function getAcessToken(code) {
-  const {client_id, client_secret} = getCredentials()
-  const res = await fetch('https://github.com/login/oauth/access_token', {
-    credentials: 'same-origin',
-    method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify({
-      client_id,
-      client_secret,
-      code
-    })
-  })
-  const data = await res.text()
-  const params = new URLSearchParams(data)
-  return params.get('access_token')
-}
-
-
-async function getGithubUser(token) {
-  const res = await fetch('https://api.github.com/user', {
-    credentials: 'same-origin',
-    method: 'POST',
-    headers: new Headers({
-      Authorization: `bearer ${token}`
-    })
-  })
-  const data = await res.json()
-  return data
-}
-
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const code = ctx.query?.code
+  const userData = {} as userDataProps
 
-  let nickname = null
-  function setNickName (nick) {
-    nickname = nick
-  }
+  const {level,  currentExperience, 
+  challengesCompleted, username, userImage, userId, userToken} = ctx.req.cookies;
+
+  Object.assign(userData, {username, userImage, userId, userToken})
 
   if( code ) {
-    const token = await getAcessToken(code)
-    const userData = await getGithubUser(token)
-    setNickName(userData?.login)
+    const githubData = await getGithubUser(code)
+    if(githubData != "token_error"){
+      Object.assign(userData, githubData)
+    }
   }
 
-  const {username, level,  currentExperience, 
-  challengesCompleted} = ctx.req.cookies;
-
-  if(!nickname && username) {
-    setNickName(username)
+  for (const data in userData) {
+    userData[data] = userData[data] ?? null
   }
-
   return {
     props: {
-      currentUser: nickname,
+      userData,
       level: Number(level),  
       currentExperience:Number(currentExperience), 
       challengesCompleted:Number(challengesCompleted)
