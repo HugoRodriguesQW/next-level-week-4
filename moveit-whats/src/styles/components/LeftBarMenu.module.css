@@ -1,0 +1,11 @@
+.leftBarMenuContainer {
+  position: fixed;
+  height: 100%;
+  width: 9rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: var(--white);
+}
