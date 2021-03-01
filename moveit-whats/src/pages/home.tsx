@@ -11,6 +11,7 @@ import Head from "next/head";
 import styles from '../styles/pages/Home.module.css';
 
 interface HomeAppData {
+  currentUser: string;
   currentExperience: number;
   level: number;
   challengesCompleted: number;

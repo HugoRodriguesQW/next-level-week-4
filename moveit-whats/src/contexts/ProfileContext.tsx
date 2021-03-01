@@ -1,26 +1,8 @@
 import {createContext, useState, ReactNode, useEffect} from 'react';
-import challenges from '../../challenges.json'
-import cookies from 'js-cookie'
-import { LevelUpModal } from '../components/LevelUpModal';
-
-
-type challenge = {
-  type: 'body' | 'eye';
-  description: string;
-  amount: number
-}
 
 type ChallengesContextData = {
-  level: number;
-  levelUp: () => void;
-  currentExperience: number;
-  experienceToNextLevel: number;
-  challengesCompleted: number;
-  activeChallenge: challenge;
-  startNewChallenge: () => void;
-  resetChallenge: () => void;
-  completeChallenge: () => void;
-  closeUpLevelModal: () => void;
+  currentUser: string;
+  userImageUri: string;
 }
 
 interface ChallengesProviderProps  {
