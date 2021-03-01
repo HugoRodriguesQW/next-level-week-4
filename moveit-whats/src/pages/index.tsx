@@ -2,13 +2,14 @@ import {GetServerSideProps} from 'next'
 import { URLSearchParams } from 'url'
 import cookies from 'js-cookie'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { HomeApp } from './home';
 import { Logon } from './logon';
 
 import { getCredentials, getGithubUser } from './api/login';
 import { userDataProps } from '../components/Profile';
 import { LeftBarMenu } from '../components/LeftBarMenu';
+import { pageMenuContext } from '../contexts/PageMenuContext'
 
 type propsData = {
 userData: userDataProps;
@@ -19,8 +20,8 @@ challengesCompleted: number;
 }
 
 export default function Home (props:propsData) {
-  const [logged, setLogged] = useState(false)
-
+  const {isLoggedIn, currentPage, changeLoggedStatus,
+  changeCurrentPage} = useContext(pageMenuContext)
   const userData = props.userData
   
   for (const prop in props.userData){
@@ -33,8 +34,8 @@ export default function Home (props:propsData) {
     if(window.location.search){
     history.pushState({}, null, '/');
     }
-    if( userData ) {
-    setLogged(true)
+    if( userData.userToken ) {
+    changeLoggedStatus(true)
     }
   }, [])
   
@@ -42,7 +43,7 @@ export default function Home (props:propsData) {
   return (
     <>
     <LeftBarMenu />
-   {logged? HomeApp(props) : HomeApp(props)}
+   {currentPage === "main" ? HomeApp(props) : Logon()}
     </>
   )
   

@@ -1,9 +1,10 @@
 import styles from '../styles/pages/Logon.module.css'
+import { useRouter } from 'next/router'
 
 export function Logon() {
 
   function handleGithubLogin() {
-    window.location.assign("https://github.com/login/oauth/access_token=7944e9912272e60e2b6be286917cae98247f42e3&client_id=e51ba7edf1b3164eaf91&client_")
+    window.location.assign("/api/request")
   }
 
 
