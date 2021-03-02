@@ -6,8 +6,8 @@ import {useEffect, useContext } from 'react';
 import { getCredentials, getGithubUser } from './api/login';
 import { LeftBarMenu } from '../components/LeftBarMenu';
 import { userContext } from '../contexts/UserContext'
-import { HomeApp } from './home';
-import { Logon } from './logon';
+import { HomeApp } from '../insidePages/home';
+import { Logon } from '../insidePages/logon';
 
 type propsData = {
 userData: {
