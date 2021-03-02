@@ -6,8 +6,6 @@ export function getCredentials(){
   return {
     client_id: process.env.GITHUB_ID,
     client_secret: process.env.GITHUB_SECRET,
-    redirect_uri: process.env.GITHUB_URI,
-    token: process.env.GITHUB_TOKEN
   }
 }
 
@@ -18,7 +16,6 @@ export async function getGithubUser(code) {
   const {id, login, avatar_url} = userData
   return {
     userId: id ?? null,
-    userToken: token ?? null,
     username: login  ?? null,
     userImage: avatar_url ?? null
   }

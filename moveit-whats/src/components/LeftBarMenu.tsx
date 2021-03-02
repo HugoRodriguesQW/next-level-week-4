@@ -1,49 +1,55 @@
 import styles from '../styles/components/LeftBarMenu.module.css'
 import { useContext } from 'react'
-import { pageMenuContext } from '../contexts/PageMenuContext'
+import { userContext } from '../contexts/UserContext'
+import { useRouter } from 'next/router'
 
 export function LeftBarMenu (){
-
-  const {isLoggedIn, currentPage, changeLoggedStatus,
-  changeCurrentPage} = useContext(pageMenuContext)
+  const router = useRouter()
+  const {isLoggedIn, currentPage, changeCurrentPageTo, deleteLoginCookies} = useContext(userContext)
   
-  console.log(useContext(pageMenuContext))
-
   function openLoginPage(){
-    changeCurrentPage("loggon")
+    changeCurrentPageTo("logon")
   }
 
   function openMainPage(){
-    changeCurrentPage("main")
-  }
-
-  function Logout(){
-    console.log('Exluindo Cookies e recarregando a página')
+    changeCurrentPageTo("home")
   }
 
   function openAccountPage(){
-    console.log("Indo para página da conta") 
+    changeCurrentPageTo("account")
   }
 
+  function Logout(){
+    deleteLoginCookies()
+    router.reload()
+  }
+
+  
+
   return (
-    <aside className={styles.leftBarMenuContainer}>
-      <img alt="MoveIt" src="/favicon.png"></img>
+    <aside className={
+      currentPage === 'logon' ? `${styles.leftBarMenuContainerInsideLogon} ${styles.leftBarMenuContainer}` : 
+      styles.leftBarMenuContainer}>
+      <img alt="MoveIt" src="/white-logo.svg" />
       <div className={styles.menuItemsContainer}>
-        <button type="button" className={styles.main}
+        <button type="button" 
+        className={currentPage === "home" ? styles.currentPageButton : ""}
         onClick={openMainPage}>
-          Início
+        <img alt="Início" src="/icons/home.svg" />
         </button>
         
-        <button type="button" className={styles.logon}
+        <button type="button" 
+        className={currentPage === "logon" || currentPage === "account" ? styles.currentPageButton : ""}
         onClick={isLoggedIn? openAccountPage : openLoginPage}>
-          {isLoggedIn? "Conta" : "Login"}
+          {isLoggedIn? (<img alt="Conta" src="/icons/settings.svg" />) :
+          (<img alt="Login"  src="/icons/session.svg"/>)}
         </button>
       </div>
       <div>
         {isLoggedIn?
-        <button type="button" className={styles.logon}
+        <button type="button" className={styles.logoutButton}
         onClick={Logout}>
-            Logout
+          Sair
         </button>
         : null}
       </div>
