@@ -1,13 +1,15 @@
 import '../styles/global.css';
-import { PageMenuContextProvider } from '../contexts/PageMenuContext';
+import {UserContextProvider} from '../contexts/UserContext';
+import { LeftBarMenu } from '../components/LeftBarMenu';
 
 
 function MyApp({ Component, pageProps}) {
 
   return (
-    <PageMenuContextProvider>
-      <Component {...pageProps} />
-    </PageMenuContextProvider>
+    <UserContextProvider>
+    <LeftBarMenu />
+    <Component {...pageProps} />
+    </UserContextProvider>
   )
 }
 

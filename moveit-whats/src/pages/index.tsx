@@ -1,18 +1,20 @@
 import {GetServerSideProps} from 'next'
 import { URLSearchParams } from 'url'
 import cookies from 'js-cookie'
+import {useEffect, useContext } from 'react';
 
-import { useState, useEffect, useContext } from 'react';
+import { getCredentials, getGithubUser } from './api/login';
+import { LeftBarMenu } from '../components/LeftBarMenu';
+import { userContext } from '../contexts/UserContext'
 import { HomeApp } from './home';
 import { Logon } from './logon';
 
-import { getCredentials, getGithubUser } from './api/login';
-import { userDataProps } from '../components/Profile';
-import { LeftBarMenu } from '../components/LeftBarMenu';
-import { pageMenuContext } from '../contexts/PageMenuContext'
-
 type propsData = {
-userData: userDataProps;
+userData: {
+  username: string;
+  userImage: string;
+  userId: string;
+};
 currentUser: string;
 currentExperience: number;
 level: number;
@@ -20,43 +22,53 @@ challengesCompleted: number;
 }
 
 export default function Home (props:propsData) {
-  const {isLoggedIn, currentPage, changeLoggedStatus,
-  changeCurrentPage} = useContext(pageMenuContext)
   const userData = props.userData
-  
-  for (const prop in props.userData){
-    if(userData[prop]){
-      cookies.set(prop, userData[prop],{expires:365})
-    }
-  }
+  const { username, userImage, userId, setUserData, 
+  setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
 
   useEffect( ()=> {
     if(window.location.search){
     history.pushState({}, null, '/');
     }
-    if( userData.userToken ) {
-    changeLoggedStatus(true)
-    }
+    if(userData.userId  && userData.username && userData.userImage){
+    console.log(userData.userId)
+    setUserData({
+    name: userData.username,
+    image: userData.userImage,
+    id: userData.userId
+    })
+    setLoggedStatusTo(true)
+    changeCurrentPageTo('home')
+  }
   }, [])
-  
+
+  useEffect( ()=> {
+    if( userData.userId  && userData.username && userData.userImage){
+    saveLoginCookies()
+    }
+  }, [username, userImage, userId])
+
   
   return (
-    <>
-    <LeftBarMenu />
-   {currentPage === "main" ? HomeApp(props) : Logon()}
-    </>
+  <>
+   <Logon />
+  <HomeApp 
+  challengesCompleted={props.challengesCompleted}
+  currentExperience={props.currentExperience}
+  level={props.level}/>
+  </>
   )
   
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const code = ctx.query?.code
-  const userData = {} as userDataProps
+  const userData = new Object()
 
   const {level,  currentExperience, 
-  challengesCompleted, username, userImage, userId, userToken} = ctx.req.cookies;
+  challengesCompleted, username, userImage, userId} = ctx.req.cookies;
 
-  Object.assign(userData, {username, userImage, userId, userToken})
+  Object.assign(userData, {username, userImage, userId})
 
   if( code ) {
     const githubData = await getGithubUser(code)
@@ -74,6 +86,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       level: Number(level),  
       currentExperience:Number(currentExperience), 
       challengesCompleted:Number(challengesCompleted)
-    }
+    } as propsData
   }
 }

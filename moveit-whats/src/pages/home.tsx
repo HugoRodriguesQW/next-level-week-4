@@ -1,7 +1,7 @@
 import { ChallengesProvider } from "../contexts/ChallengesContext";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { CountdownProvider } from "../contexts/CountdownContext";
-import { Profile, userDataProps } from "../components/Profile";
+import { Profile } from "../components/Profile";
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
 import { ChallengeBox } from "../components/ChallengeBox";
@@ -9,21 +9,25 @@ import { ChallengeBox } from "../components/ChallengeBox";
 import Head from "next/head";
 
 import styles from '../styles/pages/Home.module.css';
+import { useContext } from "react";
+import { userContext } from "../contexts/UserContext";
 
-interface HomeAppData {
-  userData: userDataProps;
-  currentUser: string;
-  currentExperience: number;
+interface HomeAppProps {
   level: number;
+  currentExperience: number;
   challengesCompleted: number;
 }
 
-export function HomeApp (props:HomeAppData) {
+export function HomeApp ({
+  level, currentExperience,  challengesCompleted
+}: HomeAppProps) {
+  const {currentPage} = useContext(userContext)
   return (
+    <>
      <ChallengesProvider
-    level={props.level}
-    currentExperience={props.currentExperience}
-    challengesCompleted={props.challengesCompleted}
+    level={level}
+    currentExperience={currentExperience}
+    challengesCompleted={challengesCompleted}
     >
     <div className={styles.container}>
        <Head>
@@ -35,12 +39,7 @@ export function HomeApp (props:HomeAppData) {
       <CountdownProvider>
       <section>
         <div>
-          <Profile 
-            username={props.userData.username}
-            userImage={props.userData.userImage}
-            userId={props.userData.userId}
-            userToken={props.userData.userToken}
-           />
+          <Profile />
           <CompletedChallenges />
           <Countdown />
         </div>
@@ -51,5 +50,6 @@ export function HomeApp (props:HomeAppData) {
       </CountdownProvider>
     </div>
     </ChallengesProvider>
+    </>
   )
 }
