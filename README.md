@@ -12,7 +12,7 @@
   
   
  ### Para visualizar 🖥️:
- Acesse [https://next-level-week-4-git-main-hugorodriguesqw.vercel.app](https://next-level-week-4-git-main-hugorodriguesqw.vercel.app/)
+ Acesse [https://nlw-4-1.vercel.app/](https://nlw-4-1.vercel.app/)
  ### Para iniciar 🚀:
  ##### Clone o respositório e acesse a pasta (GIT no exemplo):
  ```shell 
