@@ -7,7 +7,7 @@
 
 ## <span><img src="https://github.com/HugoRodriguesQW/next-level-week-4/blob/main/moveit-whats/public/favicon.png" width="20px"></span> Move.it - Next Level Week 4 - Trilha ReactJS 
 <p align="center">
-  <img align="center" title="Trilha React" alt="Trilha React NLW4" src="https://uploaddeimagens.com.br/images/003/103/145/full/Screenshot_2021-02-26_In%C3%ADco_MoveIt.png" width="48%">
+  <img align="center" title="Trilha React" alt="Trilha React NLW4" src="https://i.ibb.co/Z2ttktt/2021-03-02-212819-1366x768-scrot.png" width="48%">
  </p>
   
   
