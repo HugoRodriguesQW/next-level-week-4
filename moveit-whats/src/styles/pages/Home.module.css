@@ -3,6 +3,7 @@
   max-width: 850px;
   margin: 0 auto;
   padding: 1.5rem 2rem;
+  padding-left: 9rem;
 
   display: flex;
   flex-direction: column;
@@ -18,6 +19,12 @@
   align-content: center;
 }
 
+@media screen and (max-width: 900px) {
+  .container {
+      padding-left: 11.5rem;
+    }
+}
+
 @media screen and (max-width: 704px) {
   .container {
     display: block;
@@ -28,4 +35,13 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
 }
+}
+
+@media screen and (max-width: 490px) {
+  .container { 
+    padding-left: 2rem;
+  }
+  .container section  {
+    padding-bottom: 10rem;
+  }
 }
