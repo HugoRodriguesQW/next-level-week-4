@@ -8,6 +8,8 @@ import { LeftBarMenu } from '../components/LeftBarMenu';
 import { userContext } from '../contexts/UserContext'
 import { HomeApp } from '../insidePages/home';
 import { Logon } from '../insidePages/logon';
+import { Config } from '../insidePages/config';
+import { ChallengesProvider } from '../contexts/ChallengesContext';
 
 type propsData = {
 userData: {
@@ -51,11 +53,15 @@ export default function Home (props:propsData) {
   
   return (
   <>
-   <Logon />
-  <HomeApp 
-  challengesCompleted={props.challengesCompleted}
+  <ChallengesProvider
+  level={props.level}
   currentExperience={props.currentExperience}
-  level={props.level}/>
+  challengesCompleted={props.challengesCompleted}
+  >
+  <Logon />
+  <Config />
+  <HomeApp />
+  </ChallengesProvider>
   </>
   )
   
