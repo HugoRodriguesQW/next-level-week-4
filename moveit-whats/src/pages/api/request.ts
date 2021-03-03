@@ -11,8 +11,7 @@ function getCredentials(){
 }
 export default (req: NowRequest, res: NowResponse) => {
   const {client_id} = getCredentials()
-  const redirect = req.headers.host
-  const url=`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=https:/${redirect}`  
+  const url=`https://github.com/login/oauth/authorize?client_id=${client_id}`  
   res.redirect(url)
 }
 
