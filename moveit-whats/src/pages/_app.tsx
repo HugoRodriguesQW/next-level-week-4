@@ -1,13 +1,13 @@
 import '../styles/global.css';
 import {UserContextProvider} from '../contexts/UserContext';
-import { LeftBarMenu } from '../components/LeftBarMenu';
+import { MenuBar } from '../components/MenuBar';
 
 
 function MyApp({ Component, pageProps}) {
 
   return (
     <UserContextProvider>
-    <LeftBarMenu />
+    <MenuBar />
     <Component {...pageProps} />
     </UserContextProvider>
   )

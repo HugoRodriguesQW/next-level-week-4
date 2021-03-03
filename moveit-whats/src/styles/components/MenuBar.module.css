@@ -1,6 +1,6 @@
-.leftBarMenuContainer {
+.menuBarContainer {
   position: fixed;
-  height: 100%;
+  height: 100vh;
   width: 9rem;
 
   display: flex;
@@ -9,27 +9,27 @@
 
   background: var(--white);
 
-  padding: 2rem 0  2rem 0;
+  padding: 2rem 0;
   z-index: 20;
 
   transition: .2s;
 }
 
-.leftBarMenuContainerInsideLogon {
+.menuBarContainerInsideLogon {
   background-color: rgba(255,255,255, 0.1);
 }
 
 
-.leftBarMenuContainerInsideLogon img,
-.leftBarMenuContainerInsideLogon .currentPageButton {
+.menuBarContainerInsideLogon img,
+.menuBarContainerInsideLogon .currentPageButton {
   filter: brightness(400%);
 }
 
-.leftBarMenuContainerInsideLogon button:not(.currentPageButton) img {
+.menuBarContainerInsideLogon button:not(.currentPageButton) img {
   filter: brightness(200%);
 }
 
-.leftBarMenuContainer > img {
+.menuBarContainer > img {
   width: 4.2rem;
   margin: 0 auto;
 }
@@ -80,4 +80,40 @@
 
 .logoutButton:hover {
   color: var(--blue);
+}
+
+@media screen and (max-width: 490px) {
+  .menuBarContainer {
+    bottom: 0;
+    width: 100vw;
+    height: 9rem;
+
+    display: grid;
+    grid-template-columns: 4.2rem auto 4.2rem;
+    align-content: center;
+    align-items: center;
+    padding: 0 2rem;
+
+    box-shadow: 0 0 60px 3px rgb(0 0 0 / 5%);
+  }
+
+  .menuItemsContainer{
+    display: inline-flex;
+  }
+
+  .menuItemsContainer > button {
+    height: 9rem;
+    width: 7rem;
+  }
+
+.menuItemsContainer > button.currentPageButton {
+  border-left: none;
+  border-bottom: 4px solid var(--blue);
+}
+
+.menuItemsContainer > button.currentPageButton img {
+  margin-top: 4px;
+  filter: grayscale(0);
+  filter: brightness(1);
+}
 }

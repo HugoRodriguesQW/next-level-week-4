@@ -1,9 +1,9 @@
-import styles from '../styles/components/LeftBarMenu.module.css'
+import styles from '../styles/components/MenuBar.module.css'
 import { useContext } from 'react'
 import { userContext } from '../contexts/UserContext'
 import { useRouter } from 'next/router'
 
-export function LeftBarMenu (){
+export function MenuBar (){
   const router = useRouter()
   const {isLoggedIn, currentPage, changeCurrentPageTo, deleteLoginCookies} = useContext(userContext)
   
@@ -28,8 +28,8 @@ export function LeftBarMenu (){
 
   return (
     <aside className={
-      currentPage === 'logon' ? `${styles.leftBarMenuContainerInsideLogon} ${styles.leftBarMenuContainer}` : 
-      styles.leftBarMenuContainer}>
+      currentPage === 'logon' ? `${styles.menuBarContainerInsideLogon} ${styles.menuBarContainer}` : 
+      styles.menuBarContainer}>
       <img alt="MoveIt" src="/white-logo.svg" />
       <div className={styles.menuItemsContainer}>
         <button type="button" 
