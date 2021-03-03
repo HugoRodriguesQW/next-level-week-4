@@ -4,7 +4,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding-left: 9rem; 
+
+  padding: 20rem; 
   
   background: var(--background);
   z-index: 10;
@@ -17,7 +18,6 @@
 
 .configContainer {
   height: 100vh;
-  width:  100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -35,18 +35,16 @@
 
 .configContainer > div {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  gap: 7.2rem;
-  align-content: center;
+  display: flex;
+  gap: 11rem;
+  flex-wrap: wrap;
 }
 
 .configContainer > div section {
+  min-width: 35rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  flex-basis: 11.1rem;
 }
 
 .configContainer section > div > p {
@@ -78,4 +76,28 @@
 
 .configButtonContainer {
   text-align: right;
+}
+
+@media screen and (max-width: 1209px) {
+  .overlay {
+    padding: 0;
+    padding-left: 11rem;
+  }
+  .configContainer  {
+    overflow-y: scroll;
+    display: block;
+    width: 100%;
+    padding: 7.4rem 5rem;
+  }
+  .configContainer > div section {
+    min-width: 100%;
+    margin-top: 2rem;
+  }
+
+  .configContainer > div section > div {
+    margin-top: 2rem;
+  }
+  .configContainer > div {
+    display: block;
+  }
 }

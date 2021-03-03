@@ -12,7 +12,7 @@ export function Config () {
     <div className={styles.overlay}>
       <div className={styles.configContainer}>
         <strong className={styles.mainTitle}>Configurações</strong>
-        <div>
+        <div className={styles.configList}>
         <section className={styles.configList}>
           <div>
             <p>Conta</p>
