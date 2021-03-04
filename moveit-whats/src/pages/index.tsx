@@ -3,8 +3,7 @@ import { URLSearchParams } from 'url'
 import cookies from 'js-cookie'
 import {useEffect, useContext } from 'react';
 
-import { getCredentials, getGithubUser } from './api/login';
-import { LeftBarMenu } from '../components/LeftBarMenu';
+import { getGithubUser } from './api/login';
 import { userContext } from '../contexts/UserContext'
 import { HomeApp } from '../insidePages/home';
 import { Logon } from '../insidePages/logon';
