@@ -4,7 +4,7 @@ import styles from "../styles/pages/Config.module.css"
 import { Profile } from "../components/Profile"
 
 export function Config () {
-  const {currentPage} = useContext(userContext)
+  const {currentPage, username} = useContext(userContext)
 
   return (
     <>
@@ -12,8 +12,8 @@ export function Config () {
     <div className={styles.overlay}>
       <div className={styles.configContainer}>
         <strong className={styles.mainTitle}>Configurações</strong>
-        <div className={styles.configList}>
-        <section className={styles.configList}>
+        <form className={styles.configList}>
+        <section>
           <div>
             <p>Conta</p>
             <div className={styles.whiteBackground}>
@@ -22,16 +22,25 @@ export function Config () {
           </div>
           <div>
             <p>Nome de usuário</p>
-            <input type="label" defaultValue="username" />
+            <input type="label" placeholder={username} defaultValue={username}/>
           </div>
           </section>
           <section>
-           <div>
+           <div className={styles.preferencesBox}>
             <p>Preferências</p>
             <div>
-             <p>Opção 1</p>
-             <p>Opção 2</p>
-             <p>Opção 3</p>
+             <div><div>
+             <input type="checkbox" name="sounds" />
+             <p>Som quando surgir um novo desafio</p>
+             </div></div>
+              <div><div>
+             <input type="checkbox" name="notification" />
+             <p>Notificação de novo desafio</p>
+             </div></div>
+             <div><div>
+             <input type="checkbox" name="hideImageProfile" />
+             <p>Esconder imagem de perfil</p>
+             </div></div>
             </div>
           </div>
           <div className={styles.configButtonContainer} >
@@ -40,7 +49,7 @@ export function Config () {
             </button>
           </div>
         </section>
-        </div>
+        </form>
       </div>
       </div>
     ): null
