@@ -11,15 +11,17 @@
   flex: 1;
   height: 4px;
   border-radius: 4px;
-  background: var(--gray-line);
   margin: 0 1.5rem;
-  position: relative; 
+  position: relative;
+  background: var(--gray-line);
 }
 
 .experienceBar > div > div {
   height: 4px;
+  width: 100%;
   border-radius: 4px;
   background: var(--green);
+  clip-path: polygon(0 0, var(--size-bar) 0, var(--size-bar) 100%, 0 100%);
 }
 
 span.currentExperience {
