@@ -9,12 +9,18 @@ import { HomeApp } from '../insidePages/home';
 import { Logon } from '../insidePages/logon';
 import { Config } from '../insidePages/config';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
+import { ConfigProvider } from '../contexts/ConfigContext';
 
 type propsData = {
 userData: {
   username: string;
   userImage: string;
   userId: string;
+};
+config: {
+  hideProfileImage: boolean;
+  sounds: boolean;
+  notifications: boolean;
 };
 currentUser: string;
 currentExperience: number;
@@ -52,6 +58,11 @@ export default function Home (props:propsData) {
   
   return (
   <>
+  <ConfigProvider 
+  sounds={props.config.sounds}
+  notifications={props.config.notifications}
+  hideProfileImage={props.config.hideProfileImage}
+  >
   <ChallengesProvider
   level={props.level}
   currentExperience={props.currentExperience}
@@ -61,6 +72,7 @@ export default function Home (props:propsData) {
   <Config />
   <HomeApp />
   </ChallengesProvider>
+  </ConfigProvider>
   </>
   )
   
@@ -73,6 +85,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {level,  currentExperience, 
   challengesCompleted, username, userImage, userId} = ctx.req.cookies;
 
+  const {enableSounds, enableNotification, hideProfileImageStatus} = ctx.req.cookies;
+  
+  const config = {
+    sounds: (enableSounds == 'true'),
+    notifications: (enableNotification == 'true'),
+    hideProfileImage: (hideProfileImageStatus == 'true')
+  }
+  
   Object.assign(userData, {username, userImage, userId})
 
   if( code ) {
@@ -88,6 +108,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       userData,
+      config,
       level: Number(level),  
       currentExperience:Number(currentExperience), 
       challengesCompleted:Number(challengesCompleted)
