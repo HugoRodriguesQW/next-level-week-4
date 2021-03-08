@@ -1,10 +1,14 @@
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import { userContext } from "../contexts/UserContext"
 import styles from "../styles/pages/Config.module.css"
 import { Profile } from "../components/Profile"
+import { ConfigContext } from "../contexts/ConfigContext"
 
 export function Config () {
   const {currentPage, username} = useContext(userContext)
+  const {sounds, notifications, hideProfileImage, isCurrentSaved, 
+  showHideProfileImage, enableDisableNotifications,
+  enableDisableSounds, saveConfig} = useContext(ConfigContext)
 
   return (
     <>
@@ -30,22 +34,27 @@ export function Config () {
             <p>Preferências</p>
             <div>
              <div><div>
-             <input type="checkbox" name="sounds" />
+             <input type="checkbox" name="sounds" checked={sounds}
+             onChange={enableDisableSounds} />
              <p>Som quando surgir um novo desafio</p>
              </div></div>
               <div><div>
-             <input type="checkbox" name="notification" />
+             <input type="checkbox" name="notification" checked={notifications}
+             onChange={enableDisableNotifications} />
              <p>Notificação de novo desafio</p>
              </div></div>
              <div><div>
-             <input type="checkbox" name="hideImageProfile" />
+             <input type="checkbox" name="hideImageProfile" checked={hideProfileImage} 
+             onChange={showHideProfileImage} />
              <p>Esconder imagem de perfil</p>
              </div></div>
             </div>
           </div>
           <div className={styles.configButtonContainer} >
-            <button type="button" className={styles.saveConfigButton} >
-              Salvar
+            
+            <button type="button" className={isCurrentSaved ? styles.savedConfigButton : null} 
+            onClick={isCurrentSaved ? null : saveConfig}>
+              {isCurrentSaved ? "Salvo" : "Salvar"}
             </button>
           </div>
         </section>

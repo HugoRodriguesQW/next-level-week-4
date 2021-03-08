@@ -103,10 +103,16 @@
   transition: .2s;
 }
 
-.configButtonContainer button:hover {
+.configButtonContainer button:not(.savedConfigButton):hover {
   background: var(--blue);
   color: var(--white);
 }
+
+.savedConfigButton {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
 
 .preferencesBox div {
   display: block;
