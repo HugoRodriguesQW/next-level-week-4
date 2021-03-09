@@ -7,8 +7,8 @@ import { ConfigContext } from "../contexts/ConfigContext"
 export function Config () {
   const {currentPage, username} = useContext(userContext)
   const {sounds, notifications, hideProfileImage, isCurrentSaved, 
-  showHideProfileImage, enableDisableNotifications,
-  enableDisableSounds, saveConfig} = useContext(ConfigContext)
+  showHideProfileImage, enableDisableNotifications, checkAndSetNewName,
+  enableDisableSounds, saveConfig, hasBlockedWords} = useContext(ConfigContext)
 
   return (
     <>
@@ -16,7 +16,7 @@ export function Config () {
     <div className={styles.overlay}>
       <div className={styles.configContainer}>
         <strong className={styles.mainTitle}>Configurações</strong>
-        <form className={styles.configList}>
+        <div className={styles.configList}>
         <section>
           <div>
             <p>Conta</p>
@@ -26,7 +26,10 @@ export function Config () {
           </div>
           <div>
             <p>Nome de usuário</p>
-            <input type="label" placeholder={username} defaultValue={username}/>
+            <input type="label" placeholder={username} defaultValue={username}
+            onChange={({target}) => checkAndSetNewName(target.value)} />
+            <em className={hasBlockedWords ? styles.invalidLabelText : `${styles.invalidLabelText} ${styles.invalidLabelDisabled}`}> 
+            Altere somente para maiúsculo/minúsculo</em>
           </div>
           </section>
           <section>
@@ -58,7 +61,7 @@ export function Config () {
             </button>
           </div>
         </section>
-        </form>
+        </div>
       </div>
       </div>
     ): null

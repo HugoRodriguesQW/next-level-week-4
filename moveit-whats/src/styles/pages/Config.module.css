@@ -168,6 +168,22 @@
   margin-left: 2.95rem;
 }
 
+.invalidLabelText {
+  color: var(--red);
+  display: block;
+  width: 100%;
+  position: absolute;
+  padding-top: .5rem;
+  opacity: 1;
+  font-size: 1.3rem;
+  transition: .2s;
+}
+
+.invalidLabelDisabled{
+  opacity: 0;
+  padding-top: 1rem;
+}
+
 @media screen and (max-width: 1277px) {
   .overlay {
     padding: 0;
@@ -198,7 +214,11 @@
 
   .configList section > div:last-child > p {
     padding-bottom: 1.3rem;
-}
+  }
+
+  .invalidLabelText {
+    position: inherit;
+  }
 }
 
 @media screen and (max-width: 490px) {

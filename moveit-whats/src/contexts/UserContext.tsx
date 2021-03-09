@@ -18,6 +18,7 @@ interface userData  {
   changeCurrentPageTo: (page: 'home' | 'logon' | 'account') => void;
   saveLoginCookies: () => void;
   deleteLoginCookies: () => void;
+  changeAndSaveUserName: (name : string) => void;
   setUserData: ({name, image, id}: userProps) => void;
 }
 
@@ -63,6 +64,11 @@ export function UserContextProvider({children}: userProviderProps) {
     setUserImage(image)
   }
 
+  function changeAndSaveUserName(name : string) {
+    setUsername(name)
+    cookies.set('username', name,{expires:365})
+  }
+
   return (
     <userContext.Provider value={
       {
@@ -75,7 +81,8 @@ export function UserContextProvider({children}: userProviderProps) {
       changeCurrentPageTo,
       saveLoginCookies,
       setUserData,
-      deleteLoginCookies
+      deleteLoginCookies,
+      changeAndSaveUserName
       }
     }>
     {children}
