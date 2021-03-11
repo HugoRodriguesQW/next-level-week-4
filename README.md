@@ -17,7 +17,7 @@
  
  
  ### Para visualizar 🖥️:
- Acesse [https://nlw-4-1.vercel.app/](https://nlw-4-1.vercel.app/) para acessar a aplicação.
+ Acesse [https://nlw4-hugorodriguesqw.vercel.app/](https://nlw4-hugorodriguesqw.vercel.app/) para acessar a aplicação.
 
  
  ### Para iniciar 🚀:
