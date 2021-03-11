@@ -37,6 +37,29 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
   const [isCurrentSaved, setSavedStatus] = useState(true)
 
   const [hasBlockedWords, setHasBlockedWords] = useState(false)
+  
+  
+  useEffect(()=> {
+    requestNotificationPermission()
+  }, [])
+  
+  useEffect(()=> {
+    if( notifications && Notification.permission !== "granted") {
+    if( Notification.permission === 'denied') {
+      alert('As notificações estão bloqueadas pelo navegador.')
+    }
+    setNotificationsState(false)
+    requestNotificationPermission()
+    }
+  }, [notifications]) 
+  
+ function requestNotificationPermission(){
+    Notification.requestPermission().then( function (permission) {
+      if( permission === 'granted') {
+        setNotificationsState(true)
+      }
+    })
+  }
 
   function checkAndSetNewName(name: string) {
     if( name.toLowerCase() != username.toLowerCase() ) { 

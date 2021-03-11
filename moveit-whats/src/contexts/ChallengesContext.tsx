@@ -1,7 +1,8 @@
-import {createContext, useState, ReactNode, useEffect} from 'react';
+import {createContext, useState, ReactNode, useEffect, useContext} from 'react';
 import challenges from '../../challenges.json'
 import cookies from 'js-cookie'
 import { LevelUpModal } from '../components/LevelUpModal';
+import { ConfigContext } from '../contexts/ConfigContext'
 
 
 type challenge = {
@@ -36,6 +37,9 @@ export function ChallengesProvider({
   children,
   ...rest
   }: ChallengesProviderProps) {
+  
+  const {sounds, notifications} = useContext(ConfigContext) 
+  
   const [level, setLevel] = useState(rest.level ?? 1)
 
   const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
@@ -45,11 +49,6 @@ export function ChallengesProvider({
   const [activeChallenge, setActiveChallenge] = useState(null)
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
-
-  
-  useEffect(()=> {
-    Notification.requestPermission();
-  }, [])
 
   useEffect(()=> {
     cookies.set('level', String(level))
@@ -67,12 +66,16 @@ export function ChallengesProvider({
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length)
     const challenge = challenges[randomChallengeIndex]
     setActiveChallenge(challenge)
+    
+    if( notifications ) {
+      new Notification('Novo desafio', {
+        body: `Valendo ${challenge.amount}xp!`
+      })
+    }
 
-    new Notification('Novo desafio', {
-      body: `Valendo ${challenge.amount}xp!`
-    })
-
-    new Audio('/notification.mp3').play()
+    if( sounds ) {
+      new Audio('/notification.mp3').play()
+    }
   }
 
   function resetChallenge() {
