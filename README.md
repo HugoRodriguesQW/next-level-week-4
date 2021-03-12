@@ -11,7 +11,7 @@
 <kbd>
   <img  title="Tela de Login" src="https://i.ibb.co/7kBn6Pd/Screenshot-2021-03-04-logon-Move-It.png" width="32%" />
   <img  title="Tela principal" src="https://i.ibb.co/Z2ttktt/2021-03-02-212819-1366x768-scrot.png" width="32%" />
-  <img  title="Tela de configuração" src="https://user-images.githubusercontent.com/71078903/110977042-90d2e380-8359-11eb-8430-1e63baeecf30.png" width="32%" />
+  <img  title="Tela de configuração" src="https://i.ibb.co/k5QWCjt/Screenshot-2021-03-04-account-Move-It.png" width="32%" />
   <img  title="Tela de configuração" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" width="32%" >
   <img  title="Tela principal" src="https://user-images.githubusercontent.com/71078903/110975321-80216e00-8357-11eb-8c57-e52ecfa7f2dc.png" width="32%" >
   
