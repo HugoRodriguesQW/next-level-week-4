@@ -120,9 +120,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     userData[data] = userData[data] ?? null
   }
   
+  
   const devSettings = {
     isDev: dev === 'true',
-    time: Number(time?.replace(/[^\d.-]/g, '') ?? '')
+    time: Number( (String(time)?.replace(/[^\d.-]/g, '')) ?? '')
   }
   
   return {
