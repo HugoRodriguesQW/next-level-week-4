@@ -8,7 +8,8 @@ export function Config () {
   const {currentPage, username} = useContext(userContext)
   const {sounds, notifications, hideProfileImage, isCurrentSaved, 
   showHideProfileImage, enableDisableNotifications, checkAndSetNewName,
-  enableDisableSounds, saveConfig, hasBlockedWords} = useContext(ConfigContext)
+  enableDisableSounds, saveConfig, hasBlockedWords,
+  darkMode, enableDisableDarkMode} = useContext(ConfigContext)
 
   return (
     <>
@@ -36,21 +37,38 @@ export function Config () {
            <div className={styles.preferencesBox}>
             <p>Preferências</p>
             <div>
-             <div><div>
-             <input type="checkbox" name="sounds" checked={sounds}
-             onChange={enableDisableSounds} />
-             <p>Som quando surgir um novo desafio</p>
-             </div></div>
-              <div><div>
-             <input type="checkbox" name="notification" checked={notifications}
-             onChange={enableDisableNotifications} />
-             <p>Notificação de novo desafio</p>
-             </div></div>
-             <div><div>
-             <input type="checkbox" name="hideImageProfile" checked={hideProfileImage} 
-             onChange={showHideProfileImage} />
-             <p>Esconder imagem de perfil</p>
-             </div></div>
+              <div>
+                <div>
+                <input type="checkbox" name="sounds" checked={sounds}
+                onChange={enableDisableSounds} />
+                <p>Som quando surgir um novo desafio</p>
+                </div>
+              </div>
+              
+              <div>
+                <div>
+                <input type="checkbox" name="notification" checked={notifications}
+                onChange={enableDisableNotifications} />
+                <p>Notificação de novo desafio</p>
+                </div>
+              </div>
+              
+              <div>
+                <div>
+                <input type="checkbox" name="hideImageProfile" checked={hideProfileImage} 
+                onChange={showHideProfileImage} />
+                <p>Esconder imagem de perfil</p>
+                </div>
+              </div>
+              
+              <div>
+                <div>
+                <input type="checkbox" name="darkMode" checked={darkMode} 
+                onChange={enableDisableDarkMode} />
+                <p>Modo escuro</p>
+                </div>
+              </div>
+              
             </div>
           </div>
           <div className={styles.configButtonContainer} >

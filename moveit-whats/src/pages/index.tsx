@@ -21,6 +21,7 @@ config: {
   hideProfileImage: boolean;
   sounds: boolean;
   notifications: boolean;
+  darkMode: boolean;
 };
 devSettings: {
   isDev: boolean,
@@ -73,6 +74,7 @@ export default function Home (props:propsData) {
   sounds={props.config.sounds}
   notifications={props.config.notifications}
   hideProfileImage={props.config.hideProfileImage}
+  darkMode={props.config.darkMode}
   >
   <ChallengesProvider
   level={props.level}
@@ -97,11 +99,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {level,  currentExperience, 
   challengesCompleted, username, userImage, userId} = ctx.req.cookies;
   
-  const {enableSounds, enableNotification, hideProfileImageStatus} = ctx.req.cookies;
+  const {enableSounds, enableNotification, hideProfileImageStatus, useDarkMode} = ctx.req.cookies;
   const config = {
     sounds: (enableSounds == 'true'),
     notifications: (enableNotification == 'true'),
-    hideProfileImage: (hideProfileImageStatus == 'true')
+    hideProfileImage: (hideProfileImageStatus == 'true'),
+    darkMode: (useDarkMode == 'true')
   }
   
   Object.assign(userData, {username, userImage, userId})
