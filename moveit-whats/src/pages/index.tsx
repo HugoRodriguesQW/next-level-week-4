@@ -4,12 +4,12 @@ import cookies from 'js-cookie'
 import {useEffect, useContext } from 'react';
 
 import { getGithubUser } from './api/login';
-import { userContext } from '../contexts/UserContext'
 import { HomeApp } from '../insidePages/home';
 import { Logon } from '../insidePages/logon';
 import { Config } from '../insidePages/config';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
+import { userContext } from '../contexts/UserContext'
 
 type propsData = {
 userData: {
@@ -22,6 +22,10 @@ config: {
   sounds: boolean;
   notifications: boolean;
 };
+devSettings: {
+  isDev: boolean,
+  time: number
+};
 currentUser: string;
 currentExperience: number;
 level: number;
@@ -30,13 +34,16 @@ challengesCompleted: number;
 
 export default function Home (props:propsData) {
   const userData = props.userData
-  const { username, userImage, userId, setUserData, 
+  const devSettings = props.devSettings
+  
+  const { username, userImage, userId, setUserData, useDevSettings, 
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
-
+  
   useEffect( ()=> {
     if(window.location.search){
     history.pushState({}, null, '/');
     }
+    
     if(userData.userId  && userData.username && userData.userImage){
     console.log(userData.userId)
     setUserData({
@@ -46,7 +53,11 @@ export default function Home (props:propsData) {
     })
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
-  }
+    }
+    
+    if(devSettings.isDev){
+    useDevSettings(devSettings)
+    }
   }, [])
 
   useEffect( ()=> {
@@ -80,13 +91,13 @@ export default function Home (props:propsData) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const code = ctx.query?.code
+  const {dev, time} = ctx.query
+  
   const userData = new Object()
-
   const {level,  currentExperience, 
   challengesCompleted, username, userImage, userId} = ctx.req.cookies;
-
-  const {enableSounds, enableNotification, hideProfileImageStatus} = ctx.req.cookies;
   
+  const {enableSounds, enableNotification, hideProfileImageStatus} = ctx.req.cookies;
   const config = {
     sounds: (enableSounds == 'true'),
     notifications: (enableNotification == 'true'),
@@ -105,10 +116,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   for (const data in userData) {
     userData[data] = userData[data] ?? null
   }
+  
+  const devSettings = {
+    isDev: dev === 'true',
+    time: Number(time?.replace(/[^\d.-]/g, '') ?? '')
+  }
+  
   return {
     props: {
       userData,
       config,
+      devSettings,
       level: Number(level),  
       currentExperience:Number(currentExperience), 
       challengesCompleted:Number(challengesCompleted)

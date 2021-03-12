@@ -7,6 +7,11 @@ type userProps = {
   id: string;
 }
 
+type devProps = {
+  isDev: boolean;
+  time: number;
+}
+
 interface userData  {
   username: string;
   userImage: string;
@@ -18,7 +23,9 @@ interface userData  {
   saveLoginCookies: () => void;
   deleteLoginCookies: () => void;
   changeAndSaveUserName: (name : string) => void;
-  setUserData: ({name, image, id}: userProps) => void;
+  setUserData: ({}: userProps) => void;
+  useDevSettings: ({}: devProps) => void;
+  devSettings: devProps;
 }
 
 interface userProviderProps {
@@ -30,6 +37,8 @@ interface userProviderProps {
 export const userContext = createContext({} as userData);
 
 export function UserContextProvider({children}: userProviderProps) {
+  
+  const [devSettings, setDevSettings] = useState({} as devProps)
   
   const [username, setUsername] = useState('Visitante')
   const [userImage, setUserImage] = useState("/favicon.png")
@@ -67,7 +76,11 @@ export function UserContextProvider({children}: userProviderProps) {
     setUsername(name)
     cookies.set('username', name,{expires:365})
   }
-
+  
+  function useDevSettings(devSetting: devProps){
+    setDevSettings(devSetting)  
+  }
+  
   return (
     <userContext.Provider value={
       {
@@ -81,7 +94,9 @@ export function UserContextProvider({children}: userProviderProps) {
       saveLoginCookies,
       setUserData,
       deleteLoginCookies,
-      changeAndSaveUserName
+      changeAndSaveUserName,
+      useDevSettings,
+      devSettings
       }
     }>
     {children}
