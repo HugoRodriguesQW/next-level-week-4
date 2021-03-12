@@ -1,9 +1,11 @@
 import {createContext, ReactNode, useState, useEffect, useContext} from 'react'
 import cookies from 'js-cookie'
 import { userContext } from './UserContext';
+import { lightTheme, darkTheme} from '../styles/theme.ts'
 
 
 interface configData {
+  darkMode: boolean;
   sounds: boolean;
   notifications: boolean;
   hideProfileImage: boolean;
@@ -14,6 +16,7 @@ interface configData {
   enableDisableNotifications: () => void;
   showHideProfileImage: () => void;
   saveConfig: () => void;
+  enableDisableDarkMode: () => void;
 }
 
 type configProviderProps = {
@@ -21,6 +24,7 @@ type configProviderProps = {
   sounds: boolean;
   notifications: boolean;
   hideProfileImage: boolean;
+  darkMode: boolean;
 }
 
 export const ConfigContext = createContext({} as configData);
@@ -29,7 +33,8 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
 
   const {username, changeAndSaveUserName} = useContext(userContext)
   const [localname, setLocalname] = useState(username)
-
+  
+  const [darkMode, setDarkMode] = useState(rest.darkMode ?? false)
   const [sounds, setSoundsState] = useState(rest.sounds ?? true)
   const [notifications, setNotificationsState] = useState(rest.notifications ?? true)
   const [hideProfileImage, setProfileImageState] = useState(rest.hideProfileImage ?? false)
@@ -53,6 +58,24 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     }
   }, [notifications]) 
   
+  
+  
+  useEffect(()=> {
+    if(darkMode){
+      setTheme(darkTheme)
+    }else{
+      setTheme(lightTheme)
+    }
+  }, [darkMode])
+  
+ function setTheme(theme){
+  if(document){
+  for(const key in theme){
+    document.documentElement.style.setProperty(key, theme[key])
+  }
+  }
+ }
+ 
  function requestNotificationPermission(){
     Notification.requestPermission().then( function (permission) {
       if( permission === 'granted') {
@@ -82,11 +105,16 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
   function showHideProfileImage(){
     setProfileImageState(hideProfileImage ? false : true)
   }
+  
+  function enableDisableDarkMode() {
+    setDarkMode(darkMode ? false : true)
+  }
 
   function saveConfig(){
     cookies.set('enableSounds', String(sounds))
     cookies.set('enableNotification', String(notifications))
     cookies.set('hideProfileImageStatus', String(hideProfileImage))
+    cookies.set('useDarkMode', String(darkMode))
     changeAndSaveUserName(localname)
     setSavedStatus(true)
   }
@@ -96,15 +124,17 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     const enableSounds = cookies.get('enableSounds')
     const enableNotification = cookies.get('enableNotification')
     const hideProfileImageStatus = cookies.get('hideProfileImageStatus')
+    const useDarkMode = cookies.get('useDarkMode')
 
     setSavedStatus(
       userName == localname &&
       enableSounds == String(sounds) &&
       enableNotification == String(notifications) &&
-      hideProfileImageStatus == String(hideProfileImage)
+      hideProfileImageStatus == String(hideProfileImage) &&
+      useDarkMode == String(darkMode)
     )
     
-  },[sounds, notifications, hideProfileImage, localname])
+  },[sounds, notifications, hideProfileImage, localname, darkMode])
 
   useEffect(()=> {
     setLocalname(username)
@@ -113,6 +143,7 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
   return (
     <ConfigContext.Provider value={
       {
+      darkMode,
       sounds,
       notifications,
       checkAndSetNewName,
@@ -122,7 +153,8 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
       enableDisableNotifications,
       showHideProfileImage,
       saveConfig,
-      isCurrentSaved
+      isCurrentSaved,
+      enableDisableDarkMode
       }
     }>
       {children}

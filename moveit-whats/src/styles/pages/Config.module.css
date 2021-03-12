@@ -165,7 +165,7 @@
 }
 
 .preferencesBox input:checked[type="checkbox"]:before {
-  margin-left: 2.95rem;
+  margin-left: 3rem;
 }
 
 .invalidLabelText {
