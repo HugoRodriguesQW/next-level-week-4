@@ -1,7 +1,6 @@
 import {createContext, ReactNode, useState, useEffect} from 'react'
 import cookies from 'js-cookie'
 
-
 type userProps = {
   name: string;
   image: string;
@@ -31,7 +30,7 @@ interface userProviderProps {
 export const userContext = createContext({} as userData);
 
 export function UserContextProvider({children}: userProviderProps) {
-
+  
   const [username, setUsername] = useState('Visitante')
   const [userImage, setUserImage] = useState("/favicon.png")
   const [userId, setUserId] = useState("local")
