@@ -1,7 +1,7 @@
 import {createContext, ReactNode, useState, useEffect, useContext} from 'react'
 import cookies from 'js-cookie'
 import { userContext } from './UserContext';
-import { lightTheme, darkTheme} from '../styles/theme.ts'
+import { lightTheme, darkTheme} from '../styles/theme'
 
 
 interface configData {
