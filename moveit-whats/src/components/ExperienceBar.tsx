@@ -10,10 +10,14 @@ export function ExperienceBar() {
   useEffect(()=> {
   if(document && experienceBarSize <= percentToNextLevel) {
   setTimeout( () => {
-    setExpSize(experienceBarSize + 1)
+    setExpSize(experienceBarSize+1)
     document.documentElement.style.setProperty('--size-bar', `${experienceBarSize}%`);
   }, 10 )
+  } else if (document && experienceBarSize > (percentToNextLevel + 1)) {
+    setExpSize(0)
   }
+  
+  console.info(experienceBarSize, percentToNextLevel)
   }, [experienceBarSize, percentToNextLevel])
 
   return (
