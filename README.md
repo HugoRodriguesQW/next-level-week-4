@@ -1,8 +1,10 @@
 <p align="center">
+<img src="https://therealsujitk-vercel-badge.vercel.app/?app=nlw4-hugorodriguesqw" />
+<img src="https://img.shields.io/badge/contributions-welcome-brightgreen" >
 <img src="https://img.shields.io/github/languages/count/hugorodriguesqw/next-level-week-4">
 <img src="https://img.shields.io/github/languages/top/hugorodriguesqw/next-level-week-4">
 <img src="https://img.shields.io/github/repo-size/HugoRodriguesQW/next-level-week-4">
-<img src="https://img.shields.io/github/last-commit/HugoRodriguesQW/next-level-week-4?color=brown">
+<img src="https://img.shields.io/github/last-commit/HugoRodriguesQW/next-level-week-4">
 </p>
 
 ## <span><img src="https://github.com/HugoRodriguesQW/next-level-week-4/blob/main/moveit-whats/public/favicon.png" width="20px" /></span> Move.it - Next Level Week 4 - Trilha ReactJS
