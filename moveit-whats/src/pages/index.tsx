@@ -11,32 +11,37 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
 
+import {MongoClient, Db} from 'mongodb'
+import { connectToDatabase, generateDatabaseToken, findUserOnDatabase, createUserInDatabase } from './api/mongodb';
+
 type propsData = {
-userData: {
-  username: string;
-  userImage: string;
-  userId: string;
-};
-config: {
-  hideProfileImage: boolean;
-  sounds: boolean;
-  notifications: boolean;
-  darkMode: boolean;
-};
-devSettings: {
-  isDev: boolean,
-  time: number
-};
+userData: userProps;
+config: configProps;
 currentUser: string;
 currentExperience: number;
 level: number;
 challengesCompleted: number;
 }
 
+
+interface userProps {
+  username: string;
+  userImage: string;
+  userId: string;
+  userToken: string;
+}
+
+interface configProps {
+  hideProfileImage: boolean;
+  sounds: boolean;
+  notifications: boolean;
+  darkMode: boolean;
+}
+
 export default function Home (props:propsData) {
+
   const userData = props.userData
-  const devSettings = props.devSettings
-  
+
   const { username, userImage, userId, setUserData, useDevSettings, 
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
   
@@ -50,14 +55,11 @@ export default function Home (props:propsData) {
     setUserData({
     name: userData.username,
     image: userData.userImage,
-    id: userData.userId
+    id: userData.userId,
+    token: userData.userToken
     })
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
-    }
-    
-    if(devSettings.isDev){
-    useDevSettings(devSettings)
     }
   }, [])
 
@@ -92,48 +94,66 @@ export default function Home (props:propsData) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const code = ctx.query?.code
-  const {dev, time} = ctx.query
+  const db:Db = await connectToDatabase(process.env.MONGODB_URI)
+
+  const GithubAuthCode = ctx.query?.code
+
+
+  const userProfile = {
+    userImage: null,
+    username: null,
+    userId: ctx.req.cookies.userToken ?? null,
+    userToken: ctx.req.cookies.userToken ?? null
+  }
+
+  const userSettings = {
+    sounds: true,
+    notifications: false,
+    hideProfileImage: false,
+    darkMode: false
+  }
+
+  const userData = {
+    currentExperience: 0,
+    challengesCompleted: 0,
+    level: 0,
+  }
+
   
-  const userData = new Object()
-  const {level,  currentExperience, 
-  challengesCompleted, username, userImage, userId} = ctx.req.cookies;
-  
-  const {enableSounds, enableNotification, hideProfileImageStatus, useDarkMode} = ctx.req.cookies;
-  const config = {
-    sounds: (enableSounds == 'true'),
-    notifications: (enableNotification == 'true'),
-    hideProfileImage: (hideProfileImageStatus == 'true'),
-    darkMode: (useDarkMode == 'true')
+  if(GithubAuthCode) {
+    const githubUserProfile = await getGithubUser(GithubAuthCode)
+    if(githubUserProfile){
+      Object.assign(userProfile, githubUserProfile)
+    }else{
+      userProfile.userToken = generateDatabaseToken()
+      await createUserInDatabase(userProfile.userToken, {
+      userProfile,
+      userSettings,
+      userData
+      }, db)
+    }
   }
   
-  Object.assign(userData, {username, userImage, userId})
+  await getUserDataFromDB()
 
-  if( code ) {
-    const githubData = await getGithubUser(code)
-    if(githubData != "token_error"){
-      Object.assign(userData, githubData)
+  async function getUserDataFromDB(){
+    const databaseUser = await findUserOnDatabase(
+      String(userProfile.userToken), db)
+    
+    if(databaseUser){
+      Object.assign(userProfile, databaseUser.userProfile)
+      Object.assign(userSettings, databaseUser.userSettings)
+      Object.assign(userData, databaseUser.userData)
     }
   }
 
-  for (const data in userData) {
-    userData[data] = userData[data] ?? null
-  }
-  
-  
-  const devSettings = {
-    isDev: dev === 'true',
-    time: Number( (String(time)?.replace(/[^\d.-]/g, '')) ?? '')
-  }
-  
   return {
     props: {
-      userData,
-      config,
-      devSettings,
-      level: Number(level),  
-      currentExperience:Number(currentExperience), 
-      challengesCompleted:Number(challengesCompleted)
+      userData: userProfile,
+      config : userSettings,
+      level: userData.level,  
+      currentExperience: userData.currentExperience, 
+      challengesCompleted: userData.challengesCompleted
     } as propsData
   }
 }

@@ -20,7 +20,7 @@ export async function getGithubUser(code) {
     userImage: avatar_url ?? null
   }
   }
-  return 'token_error'
+  return null
 }
 
 async function getAcessToken(code: string) {
