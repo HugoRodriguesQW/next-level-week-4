@@ -5,6 +5,7 @@ type userProps = {
   name: string;
   image: string;
   id: string;
+  token: string;
 }
 
 type devProps = {
@@ -16,6 +17,7 @@ interface userData  {
   username: string;
   userImage: string;
   userId: string;
+  userToken: string;
   isLoggedIn: boolean;
   currentPage: string;
   setLoggedStatusTo: (state: boolean) => void;
@@ -43,10 +45,11 @@ export function UserContextProvider({children}: userProviderProps) {
   const [username, setUsername] = useState('Visitante')
   const [userImage, setUserImage] = useState("/favicon.png")
   const [userId, setUserId] = useState("local")
+  const [userToken, setUserToken] = useState(null)
   const [currentPage, setCurrentPage] = useState('logon')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  function changeCurrentPageTo(page){
+  function changeCurrentPageTo(page : string){
     setCurrentPage(page)
   }
 
@@ -58,18 +61,21 @@ export function UserContextProvider({children}: userProviderProps) {
       cookies.set('username', username,{expires:365})
       cookies.set('userId', userId,{expires:365})
       cookies.set('userImage', userImage,{expires:365})
+      cookies.set('userToken', userToken, {expires: 365})
   }
 
   function deleteLoginCookies(){
     cookies.remove('username')
     cookies.remove('userId')
     cookies.remove('userImage')
+    cookies.remove('userToken')
   }
 
-  function setUserData({name, image, id}: userProps){
+  function setUserData({name, image, id, token}: userProps){
     setUserId(id)
     setUsername(name)
     setUserImage(image)
+    setUserToken(token)
   }
 
   function changeAndSaveUserName(name : string) {
@@ -86,6 +92,7 @@ export function UserContextProvider({children}: userProviderProps) {
       {
       username,
       userId,
+      userToken,
       userImage,
       currentPage,
       isLoggedIn,
