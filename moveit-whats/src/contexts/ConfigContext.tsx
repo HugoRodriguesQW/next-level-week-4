@@ -124,18 +124,18 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
 
   useEffect(()=> {
     async function checkConfigChanges(){
-    const db = await connectToDatabase()
+   // const db = await connectToDatabase()
 
-    const userData = await getUserFromDatabase({userId, userToken}, db)
+   // const userData = await getUserFromDatabase({userId, userToken}, db)
 
-    const conf = userData.userSettings
-    setSavedStatus(
-      conf.userName == localname &&
-      conf.sounds == sounds &&
-      conf.notifications == notifications &&
-      conf.hideProfileImage == hideProfileImage &&
-      conf.darkMode == darkMode
-    )
+   // const conf = userData.userSettings
+   // setSavedStatus(
+     // conf.userName == localname &&
+     // conf.sounds == sounds &&
+     // conf.notifications == notifications &&
+     // conf.hideProfileImage == hideProfileImage &&
+     // conf.darkMode == darkMode
+   // )
     }
     checkConfigChanges()
   },[sounds, notifications, hideProfileImage, localname, darkMode])
