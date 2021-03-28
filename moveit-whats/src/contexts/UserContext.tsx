@@ -1,5 +1,6 @@
 import {createContext, ReactNode, useState, useEffect} from 'react'
 import cookies from 'js-cookie'
+import { connectToDatabase, updateUserData } from '../pages/api/mongodb';
 
 type userProps = {
   name: string;
@@ -26,8 +27,6 @@ interface userData  {
   deleteLoginCookies: () => void;
   changeAndSaveUserName: (name : string) => void;
   setUserData: ({}: userProps) => void;
-  useDevSettings: ({}: devProps) => void;
-  devSettings: devProps;
 }
 
 interface userProviderProps {
@@ -39,8 +38,7 @@ interface userProviderProps {
 export const userContext = createContext({} as userData);
 
 export function UserContextProvider({children}: userProviderProps) {
-  
-  const [devSettings, setDevSettings] = useState({} as devProps)
+
   
   const [username, setUsername] = useState('Visitante')
   const [userImage, setUserImage] = useState("/favicon.png")
@@ -58,16 +56,12 @@ export function UserContextProvider({children}: userProviderProps) {
   }
   
   function saveLoginCookies(){
-      cookies.set('username', username,{expires:365})
-      cookies.set('userId', userId,{expires:365})
-      cookies.set('userImage', userImage,{expires:365})
-      cookies.set('userToken', userToken, {expires: 365})
+      cookies.set('userId', userId,{expires:60})
+      cookies.set('userToken', userToken, {expires: 60})
   }
 
   function deleteLoginCookies(){
-    cookies.remove('username')
     cookies.remove('userId')
-    cookies.remove('userImage')
     cookies.remove('userToken')
   }
 
@@ -78,13 +72,13 @@ export function UserContextProvider({children}: userProviderProps) {
     setUserToken(token)
   }
 
-  function changeAndSaveUserName(name : string) {
+  async function changeAndSaveUserName(name : string) {
     setUsername(name)
-    cookies.set('username', name,{expires:365})
-  }
-  
-  function useDevSettings(devSetting: devProps){
-    setDevSettings(devSetting)  
+    //const db = await connectToDatabase()
+    //updateUserData({userId: userId, userToken: null},
+     // {
+     //   'userProfile.$.username': name
+     // }, db)
   }
   
   return (
@@ -101,9 +95,7 @@ export function UserContextProvider({children}: userProviderProps) {
       saveLoginCookies,
       setUserData,
       deleteLoginCookies,
-      changeAndSaveUserName,
-      useDevSettings,
-      devSettings
+      changeAndSaveUserName
       }
     }>
     {children}

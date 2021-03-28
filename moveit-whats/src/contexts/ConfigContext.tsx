@@ -2,7 +2,7 @@ import {createContext, ReactNode, useState, useEffect, useContext} from 'react'
 import cookies from 'js-cookie'
 import { userContext } from './UserContext';
 import { lightTheme, darkTheme} from '../styles/theme'
-
+// import { updateUserData, connectToDatabase, getUserFromDatabase } from '../pages/api/mongodb';
 
 interface configData {
   darkMode: boolean;
@@ -30,8 +30,8 @@ type configProviderProps = {
 export const ConfigContext = createContext({} as configData);
 
 export function ConfigProvider({children, ...rest}: configProviderProps) {
-
-  const {username, changeAndSaveUserName} = useContext(userContext)
+  
+  const {username, changeAndSaveUserName, userId, userToken} = useContext(userContext)
   const [localname, setLocalname] = useState(username)
   
   const [darkMode, setDarkMode] = useState(rest.darkMode ?? false)
@@ -92,7 +92,6 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     setHasBlockedWords(false)
 
     setLocalname(name)
-    console.info('setado', 'name', name, 'user', username, 'local', localname)
     }
 
   function enableDisableSounds(){
@@ -110,30 +109,35 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     setDarkMode(darkMode ? false : true)
   }
 
-  function saveConfig(){
-    cookies.set('enableSounds', String(sounds))
-    cookies.set('enableNotification', String(notifications))
-    cookies.set('hideProfileImageStatus', String(hideProfileImage))
-    cookies.set('useDarkMode', String(darkMode))
+  async function saveConfig(){
+    //const db = await connectToDatabase()
+    //updateUserData({userId, userToken: null}, {
+     // "userSettings.$.sounds": sounds,
+     // "userSettings.$.notifications": notifications,
+     // "userSettings.$.hideProfileImage": hideProfileImage,
+     // "userSettings.$.darkMode": darkMode
+    //}, db)
+
     changeAndSaveUserName(localname)
     setSavedStatus(true)
   }
 
   useEffect(()=> {
-    const userName = cookies.get('username')
-    const enableSounds = cookies.get('enableSounds')
-    const enableNotification = cookies.get('enableNotification')
-    const hideProfileImageStatus = cookies.get('hideProfileImageStatus')
-    const useDarkMode = cookies.get('useDarkMode')
+    async function checkConfigChanges(){
+    const db = await connectToDatabase()
 
+    const userData = await getUserFromDatabase({userId, userToken}, db)
+
+    const conf = userData.userSettings
     setSavedStatus(
-      userName == localname &&
-      enableSounds == String(sounds) &&
-      enableNotification == String(notifications) &&
-      hideProfileImageStatus == String(hideProfileImage) &&
-      useDarkMode == String(darkMode)
+      conf.userName == localname &&
+      conf.sounds == sounds &&
+      conf.notifications == notifications &&
+      conf.hideProfileImage == hideProfileImage &&
+      conf.darkMode == darkMode
     )
-    
+    }
+    checkConfigChanges()
   },[sounds, notifications, hideProfileImage, localname, darkMode])
 
   useEffect(()=> {

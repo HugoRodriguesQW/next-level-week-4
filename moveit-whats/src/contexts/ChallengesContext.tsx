@@ -3,6 +3,8 @@ import challenges from '../../challenges.json'
 import cookies from 'js-cookie'
 import { LevelUpModal } from '../components/LevelUpModal';
 import { ConfigContext } from '../contexts/ConfigContext'
+// import { connectToDatabase, updateUserData } from '../pages/api/mongodb';
+import { userContext } from './UserContext';
 
 
 type challenge = {
@@ -38,6 +40,8 @@ export function ChallengesProvider({
   ...rest
   }: ChallengesProviderProps) {
   
+  const {userId} = useContext(userContext)
+  
   const {sounds, notifications} = useContext(ConfigContext) 
   
   const [level, setLevel] = useState(rest.level ?? 1)
@@ -51,9 +55,16 @@ export function ChallengesProvider({
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
   useEffect(()=> {
-    cookies.set('level', String(level))
-    cookies.set('currentExperience', String(currentExperience))
-    cookies.set('challengesCompleted', String(challengesCompleted))
+    async function saveOnDatabase(){
+    //const db = await connectToDatabase()
+
+    //updateUserData({userId, userToken: null},{
+     // 'userData.$.level' :level,
+     // 'userData.$.currentExperience' :currentExperience,
+     // 'userData.$.challengesCompleted' :challengesCompleted,
+    //}, db)
+    }
+    saveOnDatabase()
   }, [level, currentExperience, challengesCompleted])
   
   function levelUp () {
