@@ -1,6 +1,4 @@
 import {GetServerSideProps} from 'next'
-import { URLSearchParams } from 'url'
-import cookies from 'js-cookie'
 import {useEffect, useContext } from 'react';
 
 import { getGithubUser } from './api/login';
@@ -11,18 +9,21 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
 
-import {MongoClient, Db} from 'mongodb'
-import { connectToDatabase, generateDatabaseToken, findUserOnDatabase, createUserInDatabase } from './api/mongodb';
+import { connectToDatabase, generateDatabaseToken, getUserFromDatabase, createUserInDatabase, 
+         hasUserInDatabase, 
+         updateUserData} from './api/mongodb';
 
 type propsData = {
-userData: userProps;
-config: configProps;
-currentUser: string;
-currentExperience: number;
-level: number;
-challengesCompleted: number;
+userProfile: userProps;
+userSettings: configProps;
+userData: dataProps;
 }
 
+interface dataProps {
+  currentExperience: number;
+  level: number;
+  challengesCompleted: number;
+}
 
 interface userProps {
   username: string;
@@ -39,10 +40,10 @@ interface configProps {
 }
 
 export default function Home (props:propsData) {
+  
+  const {userProfile, userData, userSettings} = props
 
-  const userData = props.userData
-
-  const { username, userImage, userId, setUserData, useDevSettings, 
+  const { username, userImage, userId, setUserData, 
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
   
   useEffect( ()=> {
@@ -50,13 +51,13 @@ export default function Home (props:propsData) {
     history.pushState({}, null, '/');
     }
     
-    if(userData.userId  && userData.username && userData.userImage){
-    console.log(userData.userId)
+    if(userProfile.userId  && userProfile.username && userProfile.userImage){
+
     setUserData({
-    name: userData.username,
-    image: userData.userImage,
-    id: userData.userId,
-    token: userData.userToken
+    name: userProfile.username,
+    image: userProfile.userImage,
+    id: userProfile.userId,
+    token: userProfile.userToken
     })
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
@@ -64,7 +65,7 @@ export default function Home (props:propsData) {
   }, [])
 
   useEffect( ()=> {
-    if( userData.userId  && userData.username && userData.userImage){
+    if( userProfile.userId  && userProfile.username && userProfile.userImage){
     saveLoginCookies()
     }
   }, [username, userImage, userId])
@@ -73,19 +74,19 @@ export default function Home (props:propsData) {
   return (
   <>
   <ConfigProvider 
-  sounds={props.config.sounds}
-  notifications={props.config.notifications}
-  hideProfileImage={props.config.hideProfileImage}
-  darkMode={props.config.darkMode}
+  sounds={userSettings.sounds}
+  notifications={userSettings.notifications}
+  hideProfileImage={userSettings.hideProfileImage}
+  darkMode={userSettings.darkMode}
   >
   <ChallengesProvider
-  level={props.level}
-  currentExperience={props.currentExperience}
-  challengesCompleted={props.challengesCompleted}
+  level={userData.level}
+  currentExperience={userData.currentExperience}
+  challengesCompleted={userData.challengesCompleted}
   >
   <Logon />
   <Config />
-  <HomeApp />
+  <HomeApp />yar
   </ChallengesProvider>
   </ConfigProvider>
   </>
@@ -94,7 +95,7 @@ export default function Home (props:propsData) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db:Db = await connectToDatabase(process.env.MONGODB_URI)
+  const db = await connectToDatabase()
 
   const GithubAuthCode = ctx.query?.code
 
@@ -102,8 +103,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const userProfile = {
     userImage: null,
     username: null,
-    userId: ctx.req.cookies.userToken ?? null,
-    userToken: ctx.req.cookies.userToken ?? null
+    userId: ctx.req.cookies?.userId ?? null,
+    userToken: ctx.req.cookies?.userToken ?? null
   }
 
   const userSettings = {
@@ -119,41 +120,48 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     level: 0,
   }
 
-  
-  if(GithubAuthCode) {
+  async function processGithubAuthCode(){
     const githubUserProfile = await getGithubUser(GithubAuthCode)
-    if(githubUserProfile){
+
+    if(githubUserProfile) {
       Object.assign(userProfile, githubUserProfile)
-    }else{
+      const hasUser = await hasUserInDatabase(userProfile, db)
+
+      if(hasUser){
+        const newAcessToken = generateDatabaseToken()
+        
+        const succeddedUpdate = await updateUserData(
+        userProfile,{"userProfile.userToken": newAcessToken}, db)
+    
+        if(succeddedUpdate) userProfile.userToken = newAcessToken
+        return 
+      }
+
       userProfile.userToken = generateDatabaseToken()
-      await createUserInDatabase(userProfile.userToken, {
-      userProfile,
-      userSettings,
-      userData
-      }, db)
+      await createUserInDatabase({userProfile, userSettings, userData }, db)
     }
   }
-  
-  await getUserDataFromDB()
 
   async function getUserDataFromDB(){
-    const databaseUser = await findUserOnDatabase(
-      String(userProfile.userToken), db)
+    const databaseResponse = await getUserFromDatabase(
+      userProfile, db)
     
-    if(databaseUser){
-      Object.assign(userProfile, databaseUser.userProfile)
-      Object.assign(userSettings, databaseUser.userSettings)
-      Object.assign(userData, databaseUser.userData)
+    if(databaseResponse){
+      Object.assign(userProfile, databaseResponse.userProfile)
+      Object.assign(userSettings, databaseResponse.userSettings)
+      Object.assign(userData, databaseResponse.userData)
+      return
     }
   }
+
+  if(GithubAuthCode) await processGithubAuthCode()
+  if(userProfile.userId && userProfile.userToken) await getUserDataFromDB()
 
   return {
     props: {
-      userData: userProfile,
-      config : userSettings,
-      level: userData.level,  
-      currentExperience: userData.currentExperience, 
-      challengesCompleted: userData.challengesCompleted
+      userProfile,
+      userSettings,
+      userData
     } as propsData
   }
 }
