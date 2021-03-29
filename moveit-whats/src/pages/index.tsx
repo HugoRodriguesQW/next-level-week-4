@@ -95,15 +95,14 @@ export default function Home (props:propsData) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  await database.connect()
-
+  
   const GithubAuthCode = String(ctx.query?.code)
 
   const userProfile = {
     userImage: null,
     username: null,
-    userId: ctx.req.cookies?.userId ?? null,
-    userToken: ctx.req.cookies?.userToken ?? null
+    userId: ctx.req.cookies.userId ?? null,
+    userToken: ctx.req.cookies.userToken ?? null
   }
 
   const userSettings = {
@@ -118,6 +117,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     challengesCompleted: 0,
     level: 0,
   }
+                                
+  await database.connect()
 
   async function processGithubAuthCode(){
     const githubUserProfile = await getGithubUser(GithubAuthCode)
