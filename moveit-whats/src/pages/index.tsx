@@ -9,9 +9,7 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
 
-import { connectToDatabase, generateDatabaseToken, getUserFromDatabase, createUserInDatabase, 
-         hasUserInDatabase, 
-         updateUserData} from './api/mongodb';
+import { database, generateDatabaseToken } from './api/database';
 
 type propsData = {
 userProfile: userProps;
@@ -70,6 +68,24 @@ export default function Home (props:propsData) {
     }
   }, [username, userImage, userId])
 
+
+  async function get(){
+    const updateStr = JSON.stringify({'userProfile.username': 'HugoRodriguesQW'})
+
+    const ret = await fetch('/api/database', {
+      method: "GET",
+      headers: {
+        id: userProfile.userId,
+        token: userProfile.userToken,
+        action: 'update',
+        update: updateStr
+      },
+    })
+
+    const rest = await ret.json()
+    console.info('client-side', rest)
+  }
+  get()
   
   return (
   <>
@@ -95,10 +111,9 @@ export default function Home (props:propsData) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db = await connectToDatabase()
+  await database.connect()
 
   const GithubAuthCode = ctx.query?.code
-
 
   const userProfile = {
     userImage: null,
@@ -123,38 +138,39 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   async function processGithubAuthCode(){
     const githubUserProfile = await getGithubUser(GithubAuthCode)
 
-    if(githubUserProfile) {
+    if(!githubUserProfile) {
       Object.assign(userProfile, githubUserProfile)
-      const hasUser = await hasUserInDatabase(userProfile, db)
+      const hasUser = await database.has({id: userProfile.userId})
 
       if(hasUser){
         const newAcessToken = generateDatabaseToken()
         
-        const succeddedUpdate = await updateUserData(
-        userProfile,{"userProfile.userToken": newAcessToken}, db)
+        const succeddedUpdate = await database.update({
+        id: userProfile.userId, 
+        update: {"userProfile.userToken": newAcessToken}
+        })
     
-        if(succeddedUpdate) userProfile.userToken = newAcessToken
+        if(succeddedUpdate.result.ok) userProfile.userToken = newAcessToken
         return 
       }
 
       userProfile.userToken = generateDatabaseToken()
-      await createUserInDatabase({userProfile, userSettings, userData }, db)
+      await database.create({userProfile, userSettings, userData })
     }
   }
 
   async function getUserDataFromDB(){
-    const databaseResponse = await getUserFromDatabase(
-      userProfile, db)
+    const user = await database.get({id: userProfile.userId})
     
-    if(databaseResponse){
-      Object.assign(userProfile, databaseResponse.userProfile)
-      Object.assign(userSettings, databaseResponse.userSettings)
-      Object.assign(userData, databaseResponse.userData)
+    if(user){
+      Object.assign(userProfile, user.userProfile)
+      Object.assign(userSettings, user.userSettings)
+      Object.assign(userData, user.userData)
       return
     }
   }
 
-  if(GithubAuthCode) await processGithubAuthCode()
+  if(!GithubAuthCode) await processGithubAuthCode()
   if(userProfile.userId && userProfile.userToken) await getUserDataFromDB()
 
   return {
