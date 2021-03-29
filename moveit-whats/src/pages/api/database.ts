@@ -2,8 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { IncomingHttpHeaders } from "http";
 
 import { MongoClient, Db } from "mongodb"
+import { FetchProps } from "./fetch";
 import nc from 'next-connect'
 import url from 'url'
+
 
 
 let cachedDb:Db = null
@@ -13,18 +15,6 @@ interface User {
   userProfile: Object;
   userSettings: Object;
   userData: Object;
-}
-
-interface NextApiRequestExtended extends NextApiRequest {
-  headers: FetchProps
-}
-
-
-interface FetchProps extends IncomingHttpHeaders {
-  id: string;
-  token: string;
-  action: string;
-  update: string;
 }
 
 export const database = {
@@ -77,11 +67,11 @@ export function generateDatabaseToken(){
 
   return token
 }
- 
 
 const handler = nc<NextApiRequest, NextApiResponse>()
-.get(async (req: NextApiRequestExtended, res: NextApiResponse) => {
-  const {id, token, action} = req.headers
+.post(async (req: NextApiRequest, res: NextApiResponse) => {
+  const body: FetchProps = await JSON.parse(req.body)
+  const {id, token, action} = body 
   
   await database.connect()
 
@@ -94,12 +84,8 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     return 
   }
 
-  if(req.headers?.update) {
-    req.headers.update = await JSON.parse(req.headers.update)
-  }
-
   if(exec) {
-    const response = await exec(req.headers)
+    const response = await exec(body)
     res.json(response)
     return
   }
