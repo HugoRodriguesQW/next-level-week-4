@@ -1,8 +1,8 @@
 import {createContext, ReactNode, useState, useEffect, useContext} from 'react'
-import cookies from 'js-cookie'
 import { userContext } from './UserContext';
 import { lightTheme, darkTheme} from '../styles/theme'
-// import { updateUserData, connectToDatabase, getUserFromDatabase } from '../pages/api/mongodb';
+import Fetch from '../pages/api/fetch';
+import { UpdateWriteOpResult } from 'mongodb';
 
 interface configData {
   darkMode: boolean;
@@ -31,7 +31,7 @@ export const ConfigContext = createContext({} as configData);
 
 export function ConfigProvider({children, ...rest}: configProviderProps) {
   
-  const {username, changeAndSaveUserName, userId, userToken} = useContext(userContext)
+  const {username, changeAndSaveUserName, userId, userToken, isOnline} = useContext(userContext)
   const [localname, setLocalname] = useState(username)
   
   const [darkMode, setDarkMode] = useState(rest.darkMode ?? false)
@@ -68,7 +68,7 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     }
   }, [darkMode])
   
- function setTheme(theme){
+ function setTheme(theme: Object){
   if(document){
   for(const key in theme){
     document.documentElement.style.setProperty(key, theme[key])
@@ -110,32 +110,47 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
   }
 
   async function saveConfig(){
-    //const db = await connectToDatabase()
-    //updateUserData({userId, userToken: null}, {
-     // "userSettings.$.sounds": sounds,
-     // "userSettings.$.notifications": notifications,
-     // "userSettings.$.hideProfileImage": hideProfileImage,
-     // "userSettings.$.darkMode": darkMode
-    //}, db)
+    if(isOnline === false){ return }
+    const res: UpdateWriteOpResult = await Fetch({
+    id: userId, token: userToken,
+    action: 'update', update: {
+      'userSettings.sounds': sounds,
+      'userSettings.notifications': notifications,
+      'userSettings.hideProfileImage': hideProfileImage,
+      'userSettings.darkMode': darkMode,
+    }
+    })
 
+    if(res.result.ok){
     changeAndSaveUserName(localname)
     setSavedStatus(true)
+    }
   }
 
   useEffect(()=> {
     async function checkConfigChanges(){
-   // const db = await connectToDatabase()
+    if(isOnline === false){ return }
+    const user = await Fetch({
+      id: userId, token: userToken, action: 'get', update: null
+    })
 
-   // const userData = await getUserFromDatabase({userId, userToken}, db)
+    const settings = user.userSettings
+    setSavedStatus(
+      user.userProfile.username == localname &&
+      settings.sounds == sounds &&
+      settings.notifications == notifications &&
+      settings.hideProfileImage == hideProfileImage &&
+      settings.darkMode == darkMode
+    )
 
-   // const conf = userData.userSettings
-   // setSavedStatus(
-     // conf.userName == localname &&
-     // conf.sounds == sounds &&
-     // conf.notifications == notifications &&
-     // conf.hideProfileImage == hideProfileImage &&
-     // conf.darkMode == darkMode
-   // )
+    console.info(
+      'name', user.userProfile == localname,
+      'sounds', settings.sounds == sounds,
+      'notifications', settings.notifications == notifications,
+      'hideProfileImage', settings.hideProfileImage == hideProfileImage,
+      'darkMode', settings.darkMode == darkMode,
+      settings
+    )
     }
     checkConfigChanges()
   },[sounds, notifications, hideProfileImage, localname, darkMode])

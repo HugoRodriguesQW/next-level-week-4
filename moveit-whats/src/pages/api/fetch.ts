@@ -1,3 +1,4 @@
+
 export interface FetchProps {
   id: string;
   token: string;
@@ -12,7 +13,7 @@ export default async function Fetch(commands: FetchProps){
       body: JSON.stringify(commands),
     })
 
-    const values: Object = await response.json()
+    const values = await response.json()
     return values
 }
  

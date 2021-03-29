@@ -1,0 +1,96 @@
+.OfflineStatusContainer{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  z-index: 1000; 
+  background: rgba(0,0,0,0.2);
+
+  user-select: none;
+  pointer-events: none;
+
+}
+
+.OffLineStatusContent {
+  width: 10rem;
+  height: 10rem;
+
+  background: var(--white);
+  border-radius: 50%;
+
+  background-image: url(/icons/offline.svg);
+  background-size: 6rem 6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  animation: waveShadow 2s infinite, appearUp .3s forwards ease-out;
+}
+
+.OfflineStatusBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 10px;
+  
+  animation: backgroundBar 10s infinite ease-in-out;
+  background: var(--blue);
+}
+
+.Online {
+  display: none;
+}
+
+.hidenOfflineIcon {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+/*== KEYFRAMES ==*/
+@keyframes appearUp {
+  from{
+    transform: translateY(300%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveShadow {
+  0%, 100%, 20%, 80%  {
+    box-shadow: none;
+  }
+
+  50% {
+    box-shadow: 0 0 5px 5px rgba(0,0,0, 0.05);
+  }
+}
+
+@keyframes backgroundBar {
+  0%, 100% {
+    clip-path: polygon(0 0, 0% 0, 0% 10px, 0 10px);
+  }
+  50%, 80% {
+    clip-path: polygon(0 0, 100% 0, 100% 10px, 0 10px);
+  }
+
+  30%, 60%, 90% {
+    clip-path: polygon(0 0, 50% 0, 50% 10px, 0 10px);
+  }
+}
+
+/*== Media ==*/
+@media screen and (max-width: 620px) {
+  .OfflineStatusContainer {
+    align-items: center;
+    justify-content: center;
+  }
+}
