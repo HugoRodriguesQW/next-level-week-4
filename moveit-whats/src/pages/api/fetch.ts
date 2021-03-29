@@ -16,4 +16,3 @@ export default async function Fetch(commands: FetchProps){
     const values = await response.json()
     return values
 }
- 
