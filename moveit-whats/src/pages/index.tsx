@@ -9,7 +9,8 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
 
-import { database, generateDatabaseToken } from './api/database';
+import { database, generateDatabaseToken} from './api/database';
+import Fetch from './api/fetch';
 
 type propsData = {
 userProfile: userProps;
@@ -67,25 +68,11 @@ export default function Home (props:propsData) {
     saveLoginCookies()
     }
   }, [username, userImage, userId])
-
-
-  async function get(){
-    const updateStr = JSON.stringify({'userProfile.username': 'HugoRodriguesQW'})
-
-    const ret = await fetch('/api/database', {
-      method: "GET",
-      headers: {
-        id: userProfile.userId,
-        token: userProfile.userToken,
-        action: 'update',
-        update: updateStr
-      },
-    })
-
-    const rest = await ret.json()
-    console.info('client-side', rest)
-  }
-  get()
+ 
+  Fetch({
+    id: userProfile.userId, token: userProfile.userToken,
+    action: 'update', update: {'userProfile.username': 'MamãoComCenoura21'}
+  })
   
   return (
   <>
