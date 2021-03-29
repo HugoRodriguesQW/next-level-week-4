@@ -10,11 +10,10 @@
   "dependencies": {
     "@types/mongodb": "^3.6.10",
     "@vercel/node": "^1.9.0",
-    "dotenv": "^8.2.0",
     "js-cookie": "^2.2.1",
     "mongodb": "^3.6.5",
-    "mongodb-core": "^3.2.7",
     "next": "10.0.7",
+    "next-connect": "^0.10.1",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
