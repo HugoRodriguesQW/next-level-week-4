@@ -70,7 +70,7 @@ const handler = nc<NextApiRequest, NextApiResponse>()
   const acess = await database.grantAcess({id, token})
 
   if (acess === 'Refused') { 
-    res.send("Acess Refused")
+    res.send(req.body)
     return 
   }
 
