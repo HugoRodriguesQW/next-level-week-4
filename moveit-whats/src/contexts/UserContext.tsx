@@ -1,6 +1,7 @@
 import {createContext, ReactNode, useState, useEffect} from 'react'
 import cookies from 'js-cookie'
-import { connectToDatabase, updateUserData } from '../pages/api/mongodb';
+import  Fetch  from '../pages/api/fetch';
+import { UpdateWriteOpResult } from 'mongodb';
 
 type userProps = {
   name: string;
@@ -9,17 +10,13 @@ type userProps = {
   token: string;
 }
 
-type devProps = {
-  isDev: boolean;
-  time: number;
-}
-
 interface userData  {
   username: string;
   userImage: string;
   userId: string;
   userToken: string;
   isLoggedIn: boolean;
+  isOnline: boolean;
   currentPage: string;
   setLoggedStatusTo: (state: boolean) => void;
   changeCurrentPageTo: (page: 'home' | 'logon' | 'account') => void;
@@ -47,11 +44,13 @@ export function UserContextProvider({children}: userProviderProps) {
   const [currentPage, setCurrentPage] = useState('logon')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  const [isOnline, setIsOnline] = useState(true)
+
   function changeCurrentPageTo(page : string){
     setCurrentPage(page)
   }
 
-  function setLoggedStatusTo(state){
+  function setLoggedStatusTo(state: boolean){
     setIsLoggedIn(state)
   }
   
@@ -73,13 +72,19 @@ export function UserContextProvider({children}: userProviderProps) {
   }
 
   async function changeAndSaveUserName(name : string) {
-    setUsername(name)
-    //const db = await connectToDatabase()
-    //updateUserData({userId: userId, userToken: null},
-     // {
-     //   'userProfile.$.username': name
-     // }, db)
+    if(isOnline === false){ return }
+    const res: UpdateWriteOpResult = await Fetch({
+    id: userId, token: userToken,
+    action: 'update', update: {'userProfile.username': name }
+    })
+
+    if(res.result.ok) setUsername(name)
   }
+
+  useEffect(()=> {
+    window.addEventListener('offline', () => setIsOnline(false))
+    window.addEventListener('online', () => setIsOnline(true))
+  }, [])
   
   return (
     <userContext.Provider value={
@@ -90,6 +95,7 @@ export function UserContextProvider({children}: userProviderProps) {
       userImage,
       currentPage,
       isLoggedIn,
+      isOnline,
       setLoggedStatusTo,
       changeCurrentPageTo,
       saveLoginCookies,

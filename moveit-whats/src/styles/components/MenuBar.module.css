@@ -82,7 +82,7 @@
   color: var(--blue);
 }
 
-@media screen and (max-width: 490px) {
+@media screen and (max-width: 620px) {
   .menuBarContainer {
     bottom: 0;
     width: 100vw;

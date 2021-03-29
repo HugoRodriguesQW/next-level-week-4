@@ -39,6 +39,7 @@ export const database = {
     const user: User = await cachedDb?.collection('subscribers')?.findOne(
     {'userProfile.userId': identy.id})
     return user ?? null
+
   },
   async create (user: User){
     const res = await cachedDb?.collection('subscribers')?.insertOne(user)
@@ -55,17 +56,6 @@ export const database = {
     'userProfile.userToken': acess.token}) != null
     return grant ? 'Accepted' : 'Refused'
   }
-}
-
-export function generateDatabaseToken(){
-  const tokenProps = process.env.TOKEN_PROPS.split(',')
-  const token = new Array(
-    Math.round(Math.random()*3**10),
-    Math.round(Math.random()*2**10)).map(s => {return ([s,
-      tokenProps[Math.round(Object.keys(tokenProps).length * Math.random()) -1 ] ].join(''))
-    }).join('_')
-
-  return token
 }
 
 const handler = nc<NextApiRequest, NextApiResponse>()

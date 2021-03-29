@@ -1,10 +1,12 @@
 import styles from '../styles/components/Countdown.module.css'
 import { useState, useEffect, useContext} from 'react'
 import { countdownContext } from '../contexts/CountdownContext'
+import { userContext } from '../contexts/UserContext'
 
 export function Countdown() {
 
-  const {minutes, second, hasFinished, 
+  const {isOnline} = useContext(userContext)
+  const {minutes, second, hasFinished,
         isActive, resetCountdown, startCountdown} = useContext(countdownContext)
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('')
@@ -31,7 +33,7 @@ export function Countdown() {
       ) : (
       <button type="button" 
       className={isActive? `${styles.countdownButton} ${styles.countdownButtonActive}` : styles.countdownButton}
-      onClick={isActive? resetCountdown : startCountdown}>
+      onClick={isOnline? (isActive? resetCountdown : startCountdown) : null}>
         {isActive? 'Abandonar ciclo' : 'Iniciar um ciclo'}
       </button>
       )}

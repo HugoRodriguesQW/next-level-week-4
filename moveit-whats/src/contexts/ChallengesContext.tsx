@@ -1,11 +1,10 @@
 import {createContext, useState, ReactNode, useEffect, useContext} from 'react';
 import challenges from '../../challenges.json'
-import cookies from 'js-cookie'
 import { LevelUpModal } from '../components/LevelUpModal';
 import { ConfigContext } from '../contexts/ConfigContext'
-// import { connectToDatabase, updateUserData } from '../pages/api/mongodb';
-import { userContext } from './UserContext';
 
+import Fetch from '../pages/api/fetch';
+import { userContext } from './UserContext';
 
 type challenge = {
   type: 'body' | 'eye';
@@ -40,7 +39,7 @@ export function ChallengesProvider({
   ...rest
   }: ChallengesProviderProps) {
   
-  const {userId} = useContext(userContext)
+  const {userId, userToken, isOnline} = useContext(userContext)
   
   const {sounds, notifications} = useContext(ConfigContext) 
   
@@ -55,16 +54,13 @@ export function ChallengesProvider({
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
   useEffect(()=> {
-    async function saveOnDatabase(){
-    //const db = await connectToDatabase()
-
-    //updateUserData({userId, userToken: null},{
-     // 'userData.$.level' :level,
-     // 'userData.$.currentExperience' :currentExperience,
-     // 'userData.$.challengesCompleted' :challengesCompleted,
-    //}, db)
-    }
-    saveOnDatabase()
+    if(isOnline === false){ return }
+    Fetch(
+    {id: userId, token: userToken, action: 'update', update:{
+      'userData.level': level,
+      'userData.currentExperience': currentExperience,
+      'userData.challengesCompleted': challengesCompleted
+    }})
   }, [level, currentExperience, challengesCompleted])
   
   function levelUp () {

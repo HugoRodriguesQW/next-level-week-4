@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 export function MenuBar (){
   const router = useRouter()
-  const {isLoggedIn, currentPage, changeCurrentPageTo, deleteLoginCookies} = useContext(userContext)
+  const {isLoggedIn, currentPage, changeCurrentPageTo, deleteLoginCookies, isOnline} = useContext(userContext)
   
   function openLoginPage(){
     changeCurrentPageTo("logon")
@@ -34,13 +34,13 @@ export function MenuBar (){
       <div className={styles.menuItemsContainer}>
         <button type="button" 
         className={currentPage === "home" ? styles.currentPageButton : ""}
-        onClick={openMainPage}>
+        onClick={isOnline? openMainPage : null}>
         <img alt="Início" src="/icons/home.svg" />
         </button>
         
         <button type="button" 
         className={currentPage === "logon" || currentPage === "account" ? styles.currentPageButton : ""}
-        onClick={isLoggedIn? openAccountPage : openLoginPage}>
+        onClick={isOnline? (isLoggedIn? openAccountPage : openLoginPage) : null}>
           {isLoggedIn? (<img alt="Conta" src="/icons/settings.svg" />) :
           (<img alt="Login"  src="/icons/session.svg"/>)}
         </button>
@@ -48,7 +48,7 @@ export function MenuBar (){
       <div>
         {isLoggedIn?
         <button type="button" className={styles.logoutButton}
-        onClick={Logout}>
+        onClick={isOnline? Logout : null}>
           Sair
         </button>
         : null}

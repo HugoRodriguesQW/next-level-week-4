@@ -9,8 +9,8 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
 
-import { database, generateDatabaseToken} from './api/database';
-import Fetch from './api/fetch';
+import { database } from './api/database';
+import { OfflineStatus } from '../components/OfflineStatus';
 
 type propsData = {
 userProfile: userProps;
@@ -42,7 +42,7 @@ export default function Home (props:propsData) {
   
   const {userProfile, userData, userSettings} = props
 
-  const { username, userImage, userId, setUserData, 
+  const { username, userImage, userId, setUserData, isOnline,
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
   
   useEffect( ()=> {
@@ -69,11 +69,6 @@ export default function Home (props:propsData) {
     }
   }, [username, userImage, userId])
  
-  Fetch({
-    id: userProfile.userId, token: userProfile.userToken,
-    action: 'update', update: {'userProfile.username': 'MamãoComCenoura21'}
-  })
-  
   return (
   <>
   <ConfigProvider 
@@ -89,9 +84,11 @@ export default function Home (props:propsData) {
   >
   <Logon />
   <Config />
-  <HomeApp />yar
+  <HomeApp />
   </ChallengesProvider>
   </ConfigProvider>
+
+  <OfflineStatus />
   </>
   )
   
@@ -100,7 +97,7 @@ export default function Home (props:propsData) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await database.connect()
 
-  const GithubAuthCode = ctx.query?.code
+  const GithubAuthCode = String(ctx.query?.code)
 
   const userProfile = {
     userImage: null,
@@ -125,23 +122,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   async function processGithubAuthCode(){
     const githubUserProfile = await getGithubUser(GithubAuthCode)
 
-    if(!githubUserProfile) {
+    if(githubUserProfile) {
       Object.assign(userProfile, githubUserProfile)
       const hasUser = await database.has({id: userProfile.userId})
 
       if(hasUser){
-        const newAcessToken = generateDatabaseToken()
-        
         const succeddedUpdate = await database.update({
         id: userProfile.userId, 
-        update: {"userProfile.userToken": newAcessToken}
+        update: {"userProfile.userToken": GithubAuthCode}
         })
     
-        if(succeddedUpdate.result.ok) userProfile.userToken = newAcessToken
+        if(succeddedUpdate.result.ok) userProfile.userToken = GithubAuthCode
         return 
       }
 
-      userProfile.userToken = generateDatabaseToken()
+      userProfile.userToken = GithubAuthCode
       await database.create({userProfile, userSettings, userData })
     }
   }
@@ -157,7 +152,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-  if(!GithubAuthCode) await processGithubAuthCode()
+  if(GithubAuthCode) await processGithubAuthCode()
   if(userProfile.userId && userProfile.userToken) await getUserDataFromDB()
 
   return {
