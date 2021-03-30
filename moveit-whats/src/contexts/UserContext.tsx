@@ -39,7 +39,7 @@ export function UserContextProvider({children}: userProviderProps) {
   
   const [username, setUsername] = useState('Visitante')
   const [userImage, setUserImage] = useState("/favicon.png")
-  const [userId, setUserId] = useState("local")
+  const [userId, setUserId] = useState(null)
   const [userToken, setUserToken] = useState(null)
   const [currentPage, setCurrentPage] = useState('logon')
   const [isLoggedIn, setIsLoggedIn] = useState(false)

@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { IncomingHttpHeaders } from "http";
 
 import { MongoClient, Db } from "mongodb"
 import { FetchProps } from "./fetch";
@@ -36,8 +35,9 @@ export const database = {
     return res
   },
   async get (identy: {id: string}){
-    const user: User = await cachedDb?.collection('subscribers')?.findOne(
+    const user = await cachedDb?.collection('subscribers')?.findOne(
     {'userProfile.userId': identy.id})
+    console.info('database:', user, 'id', identy)
     return user ?? null
 
   },
@@ -70,7 +70,7 @@ const handler = nc<NextApiRequest, NextApiResponse>()
   const acess = await database.grantAcess({id, token})
 
   if (acess === 'Refused') { 
-    res.send(req.body)
+    res.json({'error': 'refused'})
     return 
   }
 

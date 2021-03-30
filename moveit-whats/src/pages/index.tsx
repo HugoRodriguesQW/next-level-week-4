@@ -2,9 +2,9 @@ import {GetServerSideProps} from 'next'
 import {useEffect, useContext } from 'react';
 
 import { getGithubUser } from './api/login';
-import { HomeApp } from '../insidePages/home';
-import { Logon } from '../insidePages/logon';
-import { Config } from '../insidePages/config';
+import { HomeApp } from './home';
+import { Logon } from './logon';
+import { Config } from './config';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
@@ -42,7 +42,7 @@ export default function Home (props:propsData) {
   
   const {userProfile, userData, userSettings} = props
 
-  const { username, userImage, userId, setUserData, isOnline,
+  const { username, userImage, userId, setUserData,
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
   
   useEffect( ()=> {
@@ -117,6 +117,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     challengesCompleted: 0,
     level: 0,
   }
+
+  console.info('Default:', userProfile)
                                 
   await database.connect()
 
@@ -137,6 +139,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         return 
       }
 
+      userProfile.userId = String(userProfile.userId)
       userProfile.userToken = GithubAuthCode
       await database.create({userProfile, userSettings, userData })
     }

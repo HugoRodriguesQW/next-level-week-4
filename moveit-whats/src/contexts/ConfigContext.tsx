@@ -134,6 +134,8 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
       id: userId, token: userToken, action: 'get', update: null
     })
 
+    if(!user) return
+
     const settings = user.userSettings
     setSavedStatus(
       user.userProfile.username == localname &&
@@ -141,15 +143,6 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
       settings.notifications == notifications &&
       settings.hideProfileImage == hideProfileImage &&
       settings.darkMode == darkMode
-    )
-
-    console.info(
-      'name', user.userProfile == localname,
-      'sounds', settings.sounds == sounds,
-      'notifications', settings.notifications == notifications,
-      'hideProfileImage', settings.hideProfileImage == hideProfileImage,
-      'darkMode', settings.darkMode == darkMode,
-      settings
     )
     }
     checkConfigChanges()
