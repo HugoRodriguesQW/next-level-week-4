@@ -1,6 +1,6 @@
 tasks:
-  - init: cd ./moveit-whats && yarn install
-    command: yarn dev
+  - init: cd ./moveit-whats && yarn
+    command: echo -e "Before add MONGODB_URI inside .env\nTo Run > yarn dev"
 ports:
   - port: 3000
     onOpen: open-browser

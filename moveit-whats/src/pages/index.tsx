@@ -2,9 +2,9 @@ import {GetServerSideProps} from 'next'
 import {useEffect, useContext } from 'react';
 
 import { getGithubUser } from './api/login';
-import { HomeApp } from './home';
-import { Logon } from './logon';
-import { Config } from './config';
+import { HomeApp } from '../sections/home';
+import { Logon } from '../sections/logon';
+import { Config } from '../sections/config';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'

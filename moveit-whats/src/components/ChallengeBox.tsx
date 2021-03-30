@@ -20,7 +20,7 @@ export function ChallengeBox() {
 
   return (
     <div className={styles.challengeBoxContainer}>
-    { activeChallenge? (
+    { activeChallenge ? (
       <div className={styles.challengeActive}>
         <header>
           Ganhe {activeChallenge.amount} xp
