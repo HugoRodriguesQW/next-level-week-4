@@ -42,7 +42,7 @@ export default function Home (props:propsData) {
   
   const {userProfile, userData, userSettings} = props
 
-  const { username, userImage, userId, setUserData,
+  const { username, userImage, userId, setUserData, setIsOnline,
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
   
   useEffect( ()=> {
@@ -61,6 +61,7 @@ export default function Home (props:propsData) {
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
     }
+    setIsOnline(navigator.onLine)
   }, [])
 
   useEffect( ()=> {
@@ -68,7 +69,9 @@ export default function Home (props:propsData) {
     saveLoginCookies()
     }
   }, [username, userImage, userId])
- 
+  
+  
+
   return (
   <>
   <ConfigProvider 
