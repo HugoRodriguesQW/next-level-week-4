@@ -117,31 +117,26 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     challengesCompleted: 0,
     level: 0,
   }
-
-  console.info('Default:', userProfile)
                                 
   await database.connect()
 
   async function processGithubAuthCode(){
     const githubUserProfile = await getGithubUser(GithubAuthCode)
-
+    
     if(githubUserProfile) {
       Object.assign(userProfile, githubUserProfile)
+      userProfile.userId = String(userProfile.userId)
+
       const hasUser = await database.has({id: userProfile.userId})
 
       if(hasUser){
-        const succeddedUpdate = await database.update({
-        id: userProfile.userId, 
-        update: {"userProfile.userToken": GithubAuthCode}
-        })
-    
-        if(succeddedUpdate.result.ok) userProfile.userToken = GithubAuthCode
+        const dbUser = await database.get({id: userProfile.userId})
+        userProfile.userToken         = dbUser.userProfile.userToken
         return 
       }
 
-      userProfile.userId = String(userProfile.userId)
       userProfile.userToken = GithubAuthCode
-      await database.create({userProfile, userSettings, userData })
+      await database.create({user: {userProfile, userSettings, userData }})
     }
   }
 

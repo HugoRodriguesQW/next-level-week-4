@@ -1,13 +1,16 @@
-export interface FetchProps {
+import { User, DatabaseAction, DatabaseUpdate } from "./database"
+
+export interface FetchProps extends DatabaseAction, DatabaseUpdate  {
   id: string;
   token: string;
-  action: string;
-  update: {};
+  user?: User;
 }
 
 export default async function Fetch(commands: FetchProps){
+  if(!commands.id && !commands.token) return null
+  console.info()
 
-  const response = await fetch('https://nlw4-hugorodriguesqw.vercel.app/api/database', {
+  const response = await fetch(`${window.location.origin}/api/database`, {
       method: "POST",
       headers: {
         'Content-Type': 'multipart/form-data'

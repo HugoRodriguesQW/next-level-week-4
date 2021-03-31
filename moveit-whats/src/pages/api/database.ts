@@ -6,14 +6,29 @@ import nc from 'next-connect'
 import url from 'url'
 
 
-
 let cachedDb:Db = null
 let databaseClient:MongoClient = null
 
-interface User {
-  userProfile: Object;
-  userSettings: Object;
-  userData: Object;
+export interface User {
+  userProfile: {
+    [profileData: string]: any
+  };
+  userSettings: {
+    [SettingData: string]: any
+  };
+  userData: {
+    [Data: string]: any
+  };
+}
+
+export interface DatabaseUpdate {
+  update?: {
+    [field: string]: any
+  };
+}
+
+export interface DatabaseAction {
+  action : "update" | "get" | "create" | "has"
 }
 
 export const database = {
@@ -28,20 +43,21 @@ export const database = {
     cachedDb = databaseClient.db(url.parse(secret).pathname.substr(1))
     return cachedDb
   },
-  async update (props: {id: string, update: Object}){
+  async update (props: {id: string, update?: Object}){
+    if(!props.update) return null
     const res = await cachedDb?.collection('subscribers')?.updateOne(
     {'userProfile.userId': props.id}, 
     { $set: props.update})
     return res
   },
   async get (identy: {id: string}){
-    const user = await cachedDb?.collection('subscribers')?.findOne(
+    const user: User = await cachedDb?.collection('subscribers')?.findOne(
     {'userProfile.userId': identy.id})
-    console.info('database:', user, 'id', identy)
     return user ?? null
 
   },
-  async create (user: User){
+  async create ({user}: {user?: User}){
+    if(!user)   return null
     const res = await cachedDb?.collection('subscribers')?.insertOne(user)
     return res
   },
@@ -60,18 +76,20 @@ export const database = {
 
 const handler = nc<NextApiRequest, NextApiResponse>()
 .post(async (req: NextApiRequest, res: NextApiResponse) => {
-  const body: FetchProps = await JSON.parse(req.body)
-  const {id, token, action} = body 
-  
   await database.connect()
 
-  const exec = database[action]
+  const body: FetchProps    = await JSON.parse(req.body)
+  const {id, token, action} = body 
+  const exec                = database[action]
+  
+  const NotRequirePermission = ['has', 'get']
 
-  const acess = await database.grantAcess({id, token})
-
-  if (acess === 'Refused') { 
-    res.json({'error': 'refused'})
-    return 
+  if(! NotRequirePermission.includes(action) ){
+    const acess = await database.grantAcess({id, token})
+    if (acess === 'Refused') { 
+      res.json({'error': 'refused'})
+      return 
+    }
   }
 
   if(exec) {
@@ -79,7 +97,6 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     res.json(response)
     return
   }
-  
 })
 
 export default handler
