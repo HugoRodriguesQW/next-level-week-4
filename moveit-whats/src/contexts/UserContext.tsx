@@ -24,6 +24,7 @@ interface userData  {
   deleteLoginCookies: () => void;
   changeAndSaveUserName: (name : string) => void;
   setUserData: ({}: userProps) => void;
+  setIsOnline: (status: boolean) => void;
 }
 
 interface userProviderProps {
@@ -96,6 +97,7 @@ export function UserContextProvider({children}: userProviderProps) {
       currentPage,
       isLoggedIn,
       isOnline,
+      setIsOnline,
       setLoggedStatusTo,
       changeCurrentPageTo,
       saveLoginCookies,

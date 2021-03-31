@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0",
     "@types/mongodb": "^3.6.10",
     "@vercel/node": "^1.9.0",
     "dotenv": "^8.2.0",
@@ -15,8 +16,10 @@
     "mongodb": "^3.6.5",
     "next": "10.0.7",
     "next-connect": "^0.10.1",
+    "next-pwa": "^5.0.6",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "webpack": "4.4.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
