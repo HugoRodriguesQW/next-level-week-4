@@ -46,7 +46,7 @@ export function ChallengesProvider({
   const [level, setLevel] = useState(rest.level ?? 1)
 
   const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
-  const experienceToNextLevel = Math.pow((level+1 ) * 4, 2)
+  const experienceToNextLevel = Math.round(Math.pow((level+1 ) * 8 - (0.4 * level), 2))
 
   const [challengesCompleted, setchallengesCompleted] = useState(rest.challengesCompleted ?? 0)
   const [activeChallenge, setActiveChallenge] = useState(null)
