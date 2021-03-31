@@ -13,7 +13,9 @@ export default async function Fetch(commands: FetchProps){
   const response = await fetch(`${window.location.origin}/api/database`, {
       method: "POST",
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Cross-Origin-Opener-Policy': 'same-origin'
       },
       body: JSON.stringify(commands),
     })
