@@ -1,6 +1,13 @@
 tasks:
-  - init: cd ./moveit-whats && yarn
-    command: echo -e "Before add MONGODB_URI inside .env\nTo Run > yarn dev"
+  - before: cd moveit-whats
+    name: Accessing project folder
+  - openMode: split-right
+  - openIn: left
+    name: Installing dependencies
+    command: yarn install
+  - openIn: right
+    name: Show notification message
+    command: echo "BEFORE > Add MONGODB_URI inside .env file!" && echo "TO RUN > yarn dev"
 ports:
   - port: 3000
     onOpen: open-browser
