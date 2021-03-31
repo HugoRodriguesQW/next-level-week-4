@@ -15,6 +15,8 @@ export function ExperienceBar() {
   }, 10 )
   } else if (document && experienceBarSize > (percentToNextLevel + 1)) {
     setExpSize(0)
+  } else if (document && experienceBarSize === 100) {
+    setExpSize(0)
   }
   }, [experienceBarSize, percentToNextLevel])
 
