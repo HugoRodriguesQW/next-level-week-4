@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "ssri": ">=8.0.1",
     "@babel/core": "^7.0.0",
     "@types/mongodb": "^3.6.10",
     "@vercel/node": "^1.9.0",
