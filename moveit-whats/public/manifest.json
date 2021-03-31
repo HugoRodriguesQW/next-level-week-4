@@ -6,23 +6,6 @@
   "theme_color": "#5965e0",
   "background_color": "#5965e0",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "https://3000-white-piranha-i5ngstss.ws-us03.gitpod.io/",
-  "prefer_related_applications": true,
-  "related_applications": [
-    {
-      "platform": "play",
-      "id": "com.pomodrone.app"
-    },
-    {
-      "platform": "play",
-      "id": "com.superelement.pomodoro"
-    },
-    {
-      "platform": "play",
-      "id": "com.tatkovlab.pomodorolite"
-    }
-  ],
 
   "icons": [
     {
