@@ -131,9 +131,9 @@ export function ConfigProvider({children, ...rest}: configProviderProps) {
     async function checkConfigChanges(){
     if(isOnline === false){ return }
     const user = await Fetch({
-      id: userId, token: userToken, action: 'get', update: null
+      id: userId, token: userToken, action: 'get'
     })
-
+    
     if(!user) return
 
     const settings = user.userSettings

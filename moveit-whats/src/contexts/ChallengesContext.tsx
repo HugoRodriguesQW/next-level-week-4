@@ -54,9 +54,11 @@ export function ChallengesProvider({
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
   useEffect(()=> {
-    if(isOnline === false){ return }
+    if(isOnline === false) return 
+    
     Fetch(
-    {id: userId, token: userToken, action: 'update', update:{
+    {id: userId, token: userToken, action: 'update', 
+    update:{
       'userData.level': level,
       'userData.currentExperience': currentExperience,
       'userData.challengesCompleted': challengesCompleted
