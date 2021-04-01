@@ -1,11 +1,11 @@
 tasks:
   - before: cd moveit-whats
-    name: Installing dependencies
+    name: Yarn Window
     command: yarn && yarn install
 
   - openMode: split-right
   - openIn: right
-    name: Show notification message
+    name: Project Terminal
     command: clear && echo "BEFORE > Add MONGODB_URI inside .env file!" && echo "TO RUN > yarn dev"
 ports:
   - port: 3000
