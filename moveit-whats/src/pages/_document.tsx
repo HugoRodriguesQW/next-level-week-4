@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
         
           {/*  SEO */}
           <link rel="canonical" href="https://nlw4-hugorodriguesqw.vercel.app/"/>
-          <meta name="title" content="Moveit">
+          <meta name="title" content="Moveit" />
           <meta name="description" content="Inspirado na Técnica Pomodoro, ajuda você a se concentrar nas tarefas e gerenciar seu tempo." />
           <meta name="robots" content="index, nofollow, noimageindex"/>
           <meta httpEquiv="content-type"  content="text/html;charset=utf-8"/>
