@@ -27,10 +27,6 @@
     </td>
     </tr><tr>
     <td align="center" width="310">
-        <img  alt="Tela de configuração dark" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" height="150" >
-      <br>Tela de configuração dark&nbsp;
-    </td>
-    <td align="center" width="310">
         <img  alt="Tela principal dark" src="https://user-images.githubusercontent.com/71078903/110975321-80216e00-8357-11eb-8c57-e52ecfa7f2dc.png" height="150" >
       <br>Tela principal dark&nbsp;
     </td>
@@ -38,9 +34,12 @@
         <img  alt="Tela do aplicativo instalado" src="https://user-images.githubusercontent.com/71078903/113226263-402b1800-927f-11eb-8cdd-bc2bc5cb2eca.png" height="150" >
       <br>Tela do aplicativo instalado&nbsp;
     </td>
+    <td align="center" width="310">
+        <img  alt="Preview Meta Tags" src="https://user-images.githubusercontent.com/71078903/113228891-68b61080-9285-11eb-99f7-c0c8f4e21bdc.gif" height="150" >
+      <br>Preview Meta Tags&nbsp;
+    </td>
   </tr>
   </table>  
-  
   <p></p>
   <details>
   <summary>Carregar todas as imagens</summary>
@@ -60,6 +59,10 @@
    </td>
    </tr>
    <tr>
+    <td align="center" width="310" rowspan="1" >
+        <img  alt="Tela de configuração dark" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" height="150" >
+      <br>Tela de configuração dark&nbsp;
+    </td>
    </tr>
   </table>  
   </details>
