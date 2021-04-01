@@ -16,7 +16,8 @@
   <img  title="Tela de configuração" src="https://i.ibb.co/k5QWCjt/Screenshot-2021-03-04-account-Move-It.png" width="32%" />
   <img  title="Tela de configuração" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" width="32%" >
   <img  title="Tela principal" src="https://user-images.githubusercontent.com/71078903/110975321-80216e00-8357-11eb-8c57-e52ecfa7f2dc.png" width="32%" >
-  
+  <img  title="Tela do aplicativo instalado" src="https://user-images.githubusercontent.com/71078903/113226263-402b1800-927f-11eb-8cdd-bc2bc5cb2eca.png" width="32%" >
+
   <p></p>
   <details>
   <summary>Carregar todas as imagens</summary>
