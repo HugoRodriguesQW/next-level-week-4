@@ -1,4 +1,6 @@
 <p align="center">
+<img src="https://img.shields.io/badge/created%20by-rocketseat-%236D5CCD" >
+<img src="https://img.shields.io/badge/developed%20by-hugorodriguesqw-%23fbff00" >
 <img src="https://therealsujitk-vercel-badge.vercel.app/?app=nlw4-hugorodriguesqw" />
 <img src="https://img.shields.io/badge/contributions-welcome-brightgreen" >
 <img src="https://img.shields.io/github/languages/count/hugorodriguesqw/next-level-week-4">
