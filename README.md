@@ -43,23 +43,26 @@
   
   <details>
   <summary>Carregar todas as imagens</summary>
-  <table>
+  
+  <table width="100%">
   <tr>
-   <td align="center" rowspan="2">
+   <td align="center" rowspan="2" colspan="1">
         <img  alt="Tela de configuração mobile" src="https://user-images.githubusercontent.com/71078903/110976684-1904b900-8359-11eb-8579-ce694cf16408.png" height="280" >
       <br><kbd>Tela de configuração mobile&nbsp;</kbd>
    </td>
-   <td align="center"  rowspan="2" >
+   <td align="center"  rowspan="2" colspan="1">
         <img  alt="Tela de principal mobile" src="https://user-images.githubusercontent.com/71078903/110976750-3174d380-8359-11eb-9ee2-2a5f84878d26.png" height="280" >
       <br><kbd>Tela de principal mobile&nbsp;</kbd>
-   </td>
-   <td align="center" rowspan="1" >
+    </td>
+  </tr>
+  <tr>
+    <td align="center" rowspan="1" colspan="1">
         <img  alt="Instalar Moveit?" src="https://user-images.githubusercontent.com/71078903/113226380-913b0c00-927f-11eb-91c5-7e7a58bbf687.png" height="140" >
       <br><kbd>Instalar Moveit?&nbsp;</kbd>
    </td>
-   </tr>
+  </tr>
    <tr>
-    <td align="center" rowspan="1" >
+    <td align="center" rowspan="1" colspan="1">
         <img  alt="Tela de configuração dark" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" height="140" >
       <br><kbd>Tela de configuração dark&nbsp;</kbd>
     </td>
