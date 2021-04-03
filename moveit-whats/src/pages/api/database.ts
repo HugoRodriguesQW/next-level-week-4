@@ -4,6 +4,7 @@ import { MongoClient, Db } from "mongodb"
 import { FetchProps } from "./fetch";
 import nc from 'next-connect'
 import url from 'url'
+import { watch } from "fs";
 
 
 let cachedDb:Db = null
@@ -19,6 +20,9 @@ export interface User {
   userData: {
     [Data: string]: any
   };
+  userDevice: {
+    [Data: string]: any
+  }
 }
 
 export interface DatabaseUpdate {
@@ -28,7 +32,7 @@ export interface DatabaseUpdate {
 }
 
 export interface DatabaseAction {
-  action : "update" | "get" | "create" | "has"
+  action : "update" | "get" | "create" | "has" | "device"
 }
 
 export const database = {
@@ -41,6 +45,7 @@ export const database = {
     databaseClient = await MongoClient.connect(secret, {
     useNewUrlParser: true, useUnifiedTopology: true })
     cachedDb = databaseClient.db(url.parse(secret).pathname.substr(1))
+
     return cachedDb
   },
   async update (props: {id: string, update?: Object}){

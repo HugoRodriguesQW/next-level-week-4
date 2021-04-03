@@ -8,6 +8,7 @@ type userProps = {
   image: string;
   id: string;
   token: string;
+  deviceId: string;
 }
 
 interface userData  {
@@ -44,6 +45,7 @@ export function UserContextProvider({children}: userProviderProps) {
   const [userToken, setUserToken] = useState(null)
   const [currentPage, setCurrentPage] = useState('logon')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [deviceId, setDeviceId] = useState(null)
 
   const [isOnline, setIsOnline] = useState(true)
 
@@ -58,18 +60,21 @@ export function UserContextProvider({children}: userProviderProps) {
   function saveLoginCookies(){
       cookies.set('userId', userId,{expires:60})
       cookies.set('userToken', userToken, {expires: 60})
+      cookies.set('deviceId', deviceId, {expires:60})
   }
 
   function deleteLoginCookies(){
     cookies.remove('userId')
     cookies.remove('userToken')
+    cookies.remove('deviceId')
   }
 
-  function setUserData({name, image, id, token}: userProps){
+  function setUserData({name, image, id, token, deviceId}: userProps){
     setUserId(id)
     setUsername(name)
     setUserImage(image)
     setUserToken(token)
+    setDeviceId(deviceId)
   }
 
   async function changeAndSaveUserName(name : string) {

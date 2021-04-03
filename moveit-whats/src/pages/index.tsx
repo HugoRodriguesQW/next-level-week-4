@@ -13,9 +13,10 @@ import { database } from './api/database';
 import { OfflineStatus } from '../components/OfflineStatus';
 
 type propsData = {
-userProfile: userProps;
-userSettings: configProps;
-userData: dataProps;
+  userProfile: userProps;
+  userSettings: configProps;
+  userData: dataProps;
+  userDevice: deviceProps;
 }
 
 interface dataProps {
@@ -38,9 +39,14 @@ interface configProps {
   darkMode: boolean;
 }
 
+interface deviceProps {
+  platform: string;
+  deviceId: string;
+}
+
 export default function Home (props:propsData) {
   
-  const {userProfile, userData, userSettings} = props
+  const {userProfile, userData, userSettings, userDevice} = props
 
   const { username, userImage, userId, setUserData, setIsOnline,
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
@@ -56,7 +62,8 @@ export default function Home (props:propsData) {
     name: userProfile.username,
     image: userProfile.userImage,
     id: userProfile.userId,
-    token: userProfile.userToken
+    token: userProfile.userToken,
+    deviceId: userDevice.deviceId
     })
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
@@ -98,7 +105,7 @@ export default function Home (props:propsData) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  
+
   const GithubAuthCode = String(ctx.query?.code)
 
   const userProfile = {
@@ -120,6 +127,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     challengesCompleted: 0,
     level: 0,
   }
+
+  const userDevice = {
+    platform: ctx.req.headers['user-agent'].split(' ')[2] ?? 'unknown',
+    deviceId: ctx.req.cookies.deviceId ?? `${ctx.req.headers['user-agent']}-${Math.random()*1000}`
+  }
                                 
   await database.connect()
 
@@ -139,7 +151,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
 
       userProfile.userToken = GithubAuthCode
-      await database.create({user: {userProfile, userSettings, userData }})
+      await database.create({user: {userProfile, userSettings, userData, userDevice }})
     }
   }
 
@@ -150,6 +162,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       Object.assign(userProfile, user.userProfile)
       Object.assign(userSettings, user.userSettings)
       Object.assign(userData, user.userData)
+      Object.assign(userDevice, user.userDevice)
       return
     }
   }
@@ -161,7 +174,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       userProfile,
       userSettings,
-      userData
+      userData,
+      userDevice
     } as propsData
   }
 }
