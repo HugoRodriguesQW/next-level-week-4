@@ -27,7 +27,8 @@ export default function Viewer(props: ErrorProps) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
-  const {type, message} = ctx.query
+  const type = ctx.query?.type?.toString()
+  const message = ctx.query?.type?.toString()
   
   if(!type || !message){
     return {

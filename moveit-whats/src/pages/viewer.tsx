@@ -34,7 +34,7 @@ export default function Viewer(props: ViewerProps) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
-  const targetId: string = ctx.query.id
+  const targetId= ctx.query.id?.toString()
   
   const user = {
     userProfile: {},

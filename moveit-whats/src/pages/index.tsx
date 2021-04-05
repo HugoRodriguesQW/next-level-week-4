@@ -99,7 +99,7 @@ export default function Home (props:propsData) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-  const GithubAuthCode = String(ctx.query?.code)
+  const GithubAuthCode = ctx.query?.code?.toString()
 
   const userProfile = {
     userImage: null,
