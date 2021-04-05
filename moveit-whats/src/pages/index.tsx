@@ -140,7 +140,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
 
       userProfile.userToken = GithubAuthCode
-      await database.create({user: {userProfile, userSettings, userData, userDevice }})
+      await database.create({user: {userProfile, userSettings, userData }})
     }
   }
 
@@ -151,7 +151,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       Object.assign(userProfile, user.userProfile)
       Object.assign(userSettings, user.userSettings)
       Object.assign(userData, user.userData)
-      Object.assign(userDevice, user.userDevice)
       return
     }
   }
