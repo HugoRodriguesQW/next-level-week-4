@@ -65,12 +65,11 @@ export function UserContextProvider({children}: userProviderProps) {
     cookies.remove('userToken')
   }
 
-  function setUserData({name, image, id, token, deviceId}: userProps){
+  function setUserData({name, image, id, token}: userProps){
     setUserId(id)
     setUsername(name)
     setUserImage(image)
     setUserToken(token)
-    setDeviceId(deviceId)
   }
 
   async function changeAndSaveUserName(name : string) {
