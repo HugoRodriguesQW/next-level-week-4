@@ -3,4 +3,4 @@ ports:
     onOpen: open-browser
 tasks:
   - before: cd moveit-whats
-    command: yarn && yarn install
+    command: yarn && yarn install && echo "BEFORE > add MONGODB_URI in .env" && echo "TO RUN > yarn dev"
