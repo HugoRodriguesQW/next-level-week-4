@@ -20,9 +20,6 @@ export interface User {
   userData: {
     [Data: string]: any
   };
-  userDevice: {
-    [Data: string]: any
-  }
 }
 
 export interface DatabaseUpdate {
@@ -32,7 +29,7 @@ export interface DatabaseUpdate {
 }
 
 export interface DatabaseAction {
-  action : "update" | "get" | "create" | "has" | "device"
+  action : "update" | "get" | "create" | "has"
 }
 
 export const database = {
