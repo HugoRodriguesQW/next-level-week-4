@@ -16,7 +16,6 @@ type propsData = {
   userProfile: userProps;
   userSettings: configProps;
   userData: dataProps;
-  userDevice: deviceProps;
 }
 
 interface dataProps {
@@ -39,14 +38,9 @@ interface configProps {
   darkMode: boolean;
 }
 
-interface deviceProps {
-  platform: string;
-  deviceId: string;
-}
-
 export default function Home (props:propsData) {
   
-  const {userProfile, userData, userSettings, userDevice} = props
+  const {userProfile, userData, userSettings} = props
 
   const { username, userImage, userId, setUserData, setIsOnline,
   setLoggedStatusTo, saveLoginCookies, changeCurrentPageTo} = useContext(userContext)
@@ -62,8 +56,7 @@ export default function Home (props:propsData) {
     name: userProfile.username,
     image: userProfile.userImage,
     id: userProfile.userId,
-    token: userProfile.userToken,
-    deviceId: userDevice.deviceId
+    token: userProfile.userToken
     })
     setLoggedStatusTo(true)
     changeCurrentPageTo('home')
@@ -127,12 +120,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     challengesCompleted: 0,
     level: 0,
   }
-
-  const userDevice = {
-    platform: ctx.req.headers['user-agent'].split(' ')[2] ?? 'unknown',
-    deviceId: ctx.req.cookies.deviceId ?? `${ctx.req.headers['user-agent']}-${Math.random()*1000}`
-  }
-                                
+  
+  
   await database.connect()
 
   async function processGithubAuthCode(){
@@ -174,8 +163,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       userProfile,
       userSettings,
-      userData,
-      userDevice
+      userData
     } as propsData
   }
 }
