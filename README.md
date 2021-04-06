@@ -75,7 +75,7 @@
 
 
  ### Para visualizar 🖥️:
- Acesse [https://nlw4-hugorodriguesqw.vercel.app/](https://nlw4-hugorodriguesqw.vercel.app/) para acessar a aplicação.
+ Acesse [https://moveit.hugorodrigues.ml/](https://moveit.hugorodrigues.ml/) para acessar a aplicação.
 
  
  ### Para iniciar 🚀:
