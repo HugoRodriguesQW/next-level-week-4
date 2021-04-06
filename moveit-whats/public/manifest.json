@@ -4,7 +4,7 @@
   "theme_color": "#5965e0",
   "background_color": "#5965e0",
   "display": "standalone",
-  "start_url": "https://nlw4-hugorodriguesqw.vercel.app/",
+  "start_url": "https://moveit.hugorodrigues.ml/",
   "scope": "/",
 
   "icons": [
