@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
           <meta httpEquiv="origin-trial" content="AqyKmy3iO4yBJwtEuP6OuxmtkakkfThRMrr2c0UZ1Gc+VzhEgVUVxLJfuHW3/yyyR59NnUNv5tC4iaLSc2eFMg8AAAB2eyJvcmlnaW4iOiJodHRwczovL25sdzQtaHVnb3JvZHJpZ3Vlc3F3LnZlcmNlbC5hcHA6NDQzIiwiZmVhdHVyZSI6IlVucmVzdHJpY3RlZFNoYXJlZEFycmF5QnVmZmVyIiwiZXhwaXJ5IjoxNjMzNDc4Mzk5fQ==" />
         
           {/*  SEO */}
-          <link rel="canonical" href="https://nlw4-hugorodriguesqw.vercel.app/"/>
+          <link rel="canonical" href="https://moveit.hugorodrigues.ml/"/>
           <meta name="title" content="Moveit" />
           <meta name="description" content="Inspirado na Técnica Pomodoro, ajuda você a se concentrar nas tarefas e gerenciar seu tempo." />
           <meta name="robots" content="index, nofollow, noimageindex"/>
