@@ -33,22 +33,15 @@ export interface DatabaseAction {
 
 export const database = {
   async connect (){
-    const {DB_USER, DB_NAME, DB_SECRET} = process.env
-
-    const mongoURI = [
-      `mongodb+srv://${DB_USER}:${DB_SECRET}`, 
-      `@hugorodriguesqw.zcct0.mongodb.net/${DB_NAME}`, 
-      '?retryWrites=true&w=majority'
-    ].join('')
-    
+    const secret = process.env.DB_URI
 
     if(!databaseClient?.isConnected()) cachedDb = null
     if(cachedDb) return cachedDb
 
-    databaseClient = await MongoClient.connect(mongoURI, {
+    databaseClient = await MongoClient.connect(secret, {
     useNewUrlParser: true, useUnifiedTopology: true })
     
-    cachedDb = databaseClient.db(DB_NAME)
+    cachedDb = databaseClient.db('moveit')
 
     return cachedDb
   },
