@@ -2,6 +2,8 @@ import {GetServerSideProps} from 'next'
 import { database } from './api/database';
 import {useEffect} from 'react'
 
+import styles from '../styles/pages/Viewer.module.css'
+
 interface ViewerProps {
   user: {
     userProfile: {
@@ -13,9 +15,19 @@ interface ViewerProps {
   };
 }
 
+interface userStatusLabelsProps {
+	['dataName': string]: string
+}
+
 export default function Viewer(props: ViewerProps) {
   
   const {userProfile, userData} = props.user
+  
+  const userStatusLabels: userStatusLabelsProps = {
+	  level: 'Level',
+	  currentExperience: 'Xp',
+	  completedChallenges: 'Desafios Completos'
+  }
   
   useEffect(()=> {
     history.replaceState({}, null, `/viewer/${userProfile.username}`)
@@ -23,11 +35,26 @@ export default function Viewer(props: ViewerProps) {
   
   return (
     <>
-    <p>This is the viewer page</p>
-    <p>name: {userProfile.username}</p>
-    <p>id: {userProfile.userId}</p>
-    <p>level: {userData.level}</p>
-    <p>experience: {userData.currentExperience}</p>
+	<div class={styles.profileContainer}>
+		<img src={userProfile.userImage} alt={userProfile.username}/>
+		<strong>{userProfile.username}</strong>
+		<div class={styles.profileStatusContainer}>
+		<ul>
+		{
+			Object.keys(userData).map( key => {
+				const name = userStatusLabels[key]
+				return <li>name {userData[key]}</li>
+			})
+		}
+		</ul>
+		</div>
+		 
+		<div class={styles.sessionButtonsContainer}>
+			<button class={styles.transferSessionButton}>Transferir</button>
+			<button class={styles.loginButton}>Login</button>
+			<button class={styles.logoutButton}>Logout</button>
+		</div>
+	</div>
     </>
   )
 }
