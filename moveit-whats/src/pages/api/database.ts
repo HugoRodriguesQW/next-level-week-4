@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient, Db } from "mongodb"
 import { FetchProps } from "./fetch";
 import nc from 'next-connect'
-import url from 'url'
 import { watch } from "fs";
 
 
@@ -34,14 +33,22 @@ export interface DatabaseAction {
 
 export const database = {
   async connect (){
-    const secret = process.env.MONGODB_URI
+    const {DB_USER, DB_NAME, DB_SECRET} = process.env
+
+    const mongoURI = [
+      `mongodb+srv://${DB_USER}:${DB_SECRET}`, 
+      `@hugorodriguesqw.zcct0.mongodb.net/${DB_NAME}`, 
+      '?retryWrites=true&w=majority'
+    ].join('')
+    
 
     if(!databaseClient?.isConnected()) cachedDb = null
     if(cachedDb) return cachedDb
 
-    databaseClient = await MongoClient.connect(secret, {
+    databaseClient = await MongoClient.connect(mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true })
-    cachedDb = databaseClient.db(url.parse(secret).pathname.substr(1))
+    
+    cachedDb = databaseClient.db(DB_NAME)
 
     return cachedDb
   },
