@@ -24,8 +24,9 @@ export default function Viewer(props: ViewerProps) {
   
   return (
     <div className={styles.viewerContainer}>
-      <div className={styles.viewerProfile}>
+      <div className={styles.viewerContent}>
         <ViewerProfile props={{...userProfile, ...userData, ...userSettings}} />
+        <button className={styles.transferButton}>Transferir</button>
       </div>
     </div>
   )

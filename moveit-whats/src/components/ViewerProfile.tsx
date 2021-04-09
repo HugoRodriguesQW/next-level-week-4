@@ -18,13 +18,16 @@ export function ViewerProfile({props}: ViewerProfileProps) {
   
   return (
     <div className={styles.viewerProfileContainer}>
+      <div className={styles.floatLeft}>
       <img alt={`${username} Profile`}
       src={hideProfileImage? '/favicon.png' : userImage} />
-      <p styles={styles.floatLevelBox}>{level}</p>
-      <div>
+      <span className={styles.floatLevelBox}>{level}</span>
+      </div>
+      <div className={styles.floatRight}>
         <strong>{username}</strong>
-        <p>Desafios Completos {challengesCompleted}</p>
-        <p>XP {currentExperience}</p>
+        <p><span>Desafios Completos</span><span>{challengesCompleted}</span></p>
+        <p><span>Level</span><span>{level}</span></p>
+        <p><span>XP</span><span>{currentExperience}</span></p>
       </div>
     </div>
   )
