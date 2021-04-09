@@ -50,8 +50,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-  
-  delete user._id
 
   return {
     props: {
