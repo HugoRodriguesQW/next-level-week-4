@@ -5,6 +5,7 @@ import { getGithubUser } from './api/login';
 import { HomeApp } from '../sections/home';
 import { Logon } from '../sections/logon';
 import { Config } from '../sections/config';
+import { MenuBar } from '../components/MenuBar';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { ConfigProvider } from '../contexts/ConfigContext';
 import { userContext } from '../contexts/UserContext'
@@ -85,6 +86,7 @@ export default function Home (props:propsData) {
   currentExperience={userData.currentExperience}
   challengesCompleted={userData.challengesCompleted}
   >
+  <MenuBar />
   <Logon />
   <Config />
   <HomeApp />

@@ -1,8 +1,10 @@
 import {GetServerSideProps} from 'next'
-import { database } from './api/database';
-import {useEffect} from 'react'
+import { database } from '../api/database';
+import {useEffect, useContext} from 'react'
+import {userContext} from '../../contexts/UserContext'
 
-import styles from '../styles/pages/Viewer.module.css'
+import styles from '../../styles/pages/Viewer.module.css'
+
 
 interface ViewerProps {
   user: {
@@ -16,12 +18,15 @@ interface ViewerProps {
 }
 
 interface userStatusLabelsProps {
-	['dataName': string]: string
+	[dataName: string]: any
 }
 
 export default function Viewer(props: ViewerProps) {
   
   const {userProfile, userData} = props.user
+  const {username} = useContext(userContext)
+  
+  console.info(username)
   
   const userStatusLabels: userStatusLabelsProps = {
 	  level: 'Level',

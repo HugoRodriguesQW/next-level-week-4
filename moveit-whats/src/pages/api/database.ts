@@ -53,10 +53,24 @@ export const database = {
     return res
   },
   async get (identy: {id: string}){
-    const user: User = await cachedDb?.collection('subscribers')?.findOne(
-    {'userProfile.userId': identy.id})
+    const query = {'userProfile.userId': identy.id}
+    const user: User = await cachedDb?.collection('subscribers')?.findOne(query)
     return user ?? null
 
+  },
+  async getByName (identy: {username?: string}) {
+    if (!identy.username) return null
+
+    const user: User = await cachedDb.collection('subscribers')?.findOne(
+      {'userProfile.username': new RegExp("^" + identy.username.toLowerCase(), "i")},
+      { projection: {
+        'userProfile.username': 1,
+        'userProfile.userImage': 1,
+        'userSettings.hideProfileImage': 1,
+        'userData': 1
+      }})
+    
+    return user ?? null
   },
   async create ({user}: {user?: User}){
     if(!user)   return null

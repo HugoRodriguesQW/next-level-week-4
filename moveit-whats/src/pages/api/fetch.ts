@@ -3,6 +3,7 @@ import { User, DatabaseAction, DatabaseUpdate } from "./database"
 export interface FetchProps extends DatabaseAction, DatabaseUpdate  {
   id: string;
   token: string;
+  username?: string;
   user?: User;
 }
 
