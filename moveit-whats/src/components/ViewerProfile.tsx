@@ -8,11 +8,10 @@ interface ViewerProfileProps {
   challengesCompleted: Number;
   currentExperience: Number;
   hideProfileImage: boolean;
-  [x: string]: any;
   }
 }
 
-export function ViewerProfile({props}: ViewerProfileProps) {
+export function ViewerProfile({props}) {
  
   const {username, userImage} = props
   const {level, challengesCompleted, currentExperience} = props
