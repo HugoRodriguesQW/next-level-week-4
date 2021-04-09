@@ -1,12 +1,14 @@
 import styles from '../styles/components/ViewerProfile.module.css'
 
 interface ViewerProfileProps {
+  props:{
   username: string;
   userImage: string;
   level: Number;
   challengesCompleted: Number;
   currentExperience: Number;
   hideProfileImage: boolean;
+  }
 }
 
 export function ViewerProfile({props}: ViewerProfileProps) {
