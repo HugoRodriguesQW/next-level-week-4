@@ -1,0 +1,47 @@
+.viewerContainer {
+  width: 100vw;
+  height: 100vh;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background: var(--background);
+}
+
+.viewerContainer .viewerContent {
+  position: relative;
+  max-width: 600px;
+ 
+  background: var(--white);
+  border-radius: 5px;
+  box-shadow: 0 0 10px 10px rgba(0,0,0,0.05);
+}
+
+.viewerContainer .transferButton {
+    position: absolute;
+    bottom: .8rem;
+    right: .8rem;
+    border: 0;
+    background: var(--blue);
+    border-radius: 5px;
+    color: #fff;
+    padding: .7rem 2rem;
+    
+    transition: .1s;
+}
+
+.viewerContainer .transferButton:hover {
+  background: var(--blue-dark);
+}
+
+@media screen and (max-width: 600px) {
+  .viewerContainer .viewerContent {
+    max-width: calc(100vw - 6rem);
+  }
+  
+  .viewerContainer .transferButton {
+    width: calc(100% - 1.4rem);
+  }
+
+}

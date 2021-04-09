@@ -1,0 +1,72 @@
+.viewerProfileContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  padding-bottom: 4rem;
+  padding-right: 2rem;
+}
+
+.viewerProfileContainer > div {
+  position: relative;
+
+}
+
+.viewerProfileContainer .floatRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.viewerProfileContainer > div > img {
+  border-radius: 5px 5px 50% 50%;
+  width: 20rem;
+}
+
+.floatLevelBox {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 70px;
+    height: 35px;
+    background: var(--blue);
+    color: #fff;
+    text-align: center;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewerProfileContainer > div > strong {
+  font-size: max(2.3rem, 1vw);
+  color: var(--title);
+  margin-bottom: .7rem;
+}
+
+.viewerProfileContainer .floatRight > p {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  
+  margin-top: .1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .viewerProfileContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4rem;
+    padding-right: 0;
+  }
+  
+  .viewerProfileContainer > div > strong {
+  font-size: max(2rem, 1vw);
+  }
+}
+
+
+
