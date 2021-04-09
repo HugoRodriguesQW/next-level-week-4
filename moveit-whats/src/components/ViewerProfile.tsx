@@ -8,6 +8,7 @@ interface ViewerProfileProps {
   challengesCompleted: Number;
   currentExperience: Number;
   hideProfileImage: boolean;
+  [x: string]: any;
   }
 }
 
