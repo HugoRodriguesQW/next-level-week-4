@@ -44,10 +44,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       props: {},
       redirect: {
         permanent: false,
-        destination: `/error?type=usernotfound&message=${username}`
+        destination: `/error/usernotfound`
       }
     }
   }
+  
+  user._id = String(user._id)
 
   return {
     props: {

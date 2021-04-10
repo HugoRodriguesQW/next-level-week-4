@@ -70,8 +70,7 @@ export const database = {
         'userSettings.hideProfileImage': 1,
         'userData': 1
       }})
-    
-    delete user._id
+      
     return user ?? null
   },
   async create ({user}: {user?: User}){
