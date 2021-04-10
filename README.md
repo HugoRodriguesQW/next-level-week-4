@@ -28,8 +28,8 @@
     </td>
     </tr><tr>
     <td align="center" >
-        <img  alt="Tela principal dark" src="https://user-images.githubusercontent.com/71078903/110975321-80216e00-8357-11eb-8c57-e52ecfa7f2dc.png" height="140" >
-      <br><kbd>Tela principal dark&nbsp;</kbd>
+        <img  alt="Tela de visualização" src="https://user-images.githubusercontent.com/71078903/114279242-2fb73200-9a23-11eb-9a5b-8ac5f6a82a46.png" height="140">
+      <br><kbd>Tela de visualização&nbsp;</kbd>
     </td>
     <td align="center" >
         <img  alt="Tela do aplicativo instalado" src="https://user-images.githubusercontent.com/71078903/113226263-402b1800-927f-11eb-8cdd-bc2bc5cb2eca.png" height="140" >
@@ -64,15 +64,22 @@
    </td>
   </tr>
    <tr>
+    <td align="center"  rowspan="2" colspan="1">
+        <img  alt="Tela de visualização mobile" src="https://user-images.githubusercontent.com/71078903/114279399-ff23c800-9a23-11eb-8ad8-d1268133e7cd.png" height="280" >
+      <br><kbd>Tela de visualização mobile&nbsp;</kbd>
+    </td>
     <td align="center" rowspan="1" colspan="1">
         <img  alt="Tela de configuração dark" src="https://user-images.githubusercontent.com/71078903/110975305-7b5cba00-8357-11eb-9267-d53d6c781e81.png" height="140" >
       <br><kbd>Tela de configuração dark&nbsp;</kbd>
     </td>
-   </tr>
+   </tr><tr>
+   <td align="center" rowspan="1" colspan="1">
+      <img  alt="Tela principal dark" src="https://user-images.githubusercontent.com/71078903/110975321-80216e00-8357-11eb-8c57-e52ecfa7f2dc.png" height="140" >
+      <br><kbd>Tela principal dark&nbsp;</kbd>
+   </td>
+  </tr>
   </table>  
   </details>
-
-
 
  ### Para visualizar 🖥️:
  Acesse [https://moveit.hugorodrigues.ml/](https://moveit.hugorodrigues.ml/) para acessar a aplicação.
