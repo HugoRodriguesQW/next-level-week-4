@@ -20,8 +20,6 @@ export default function Viewer(props: ViewerProps) {
   
   const {userProfile, userData, userSettings} = props.user ?? {}
 
-  console.info(userProfile, userData, userSettings)
-  
   return (
     <div className={styles.viewerContainer}>
       <div className={styles.viewerContent}>
@@ -34,12 +32,12 @@ export default function Viewer(props: ViewerProps) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
-  const username = ctx.params?.username.toString() ?? null
-
+  if(ctx.req.url === '/view/favicon.png')  return {props:{}}
+   
+  const username = ctx.query?.username.toString() ?? null
+  
   await database.connect()
-  
   const user = await database.getByName({username})
-  
   
   if(!user){
     return {
@@ -56,4 +54,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       user
     }
   }
+  
 }
