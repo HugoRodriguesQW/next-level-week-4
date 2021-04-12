@@ -13,7 +13,7 @@ import { userContext } from '../contexts/UserContext'
 import { database } from './api/database';
 import { OfflineStatus } from '../components/OfflineStatus';
 
-type propsData = {
+export type propsData = {
   userProfile: userProps;
   userSettings: configProps;
   userData: dataProps;

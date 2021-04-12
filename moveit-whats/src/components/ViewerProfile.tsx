@@ -1,21 +1,15 @@
 import styles from '../styles/components/ViewerProfile.module.css'
+import {User} from '../pages/api/database'
 
 interface ViewerProfileProps {
-  props:{
-  username: string;
-  userImage: string;
-  level: Number;
-  challengesCompleted: Number;
-  currentExperience: Number;
-  hideProfileImage: boolean;
-  }
+  props: User;
 }
 
-export function ViewerProfile({props}) {
+export function ViewerProfile({props} : ViewerProfileProps) {
  
-  const {username, userImage} = props
-  const {level, challengesCompleted, currentExperience} = props
-  const {hideProfileImage} = props
+  const {username, userImage} = props.userProfile
+  const {level, challengesCompleted, currentExperience} = props.userData
+  const {hideProfileImage} = props.userSettings
 
   
   return (

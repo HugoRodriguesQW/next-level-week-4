@@ -7,11 +7,13 @@ interface ErrorProps {
 }
 
 interface PageCardsData {
-  (): {
+  [variable: string]:{ 
+    (): {
     title: string,
     image: boolean;
     button: boolean;
   };
+  }
 }
 
 export default function Error(props: ErrorProps) {

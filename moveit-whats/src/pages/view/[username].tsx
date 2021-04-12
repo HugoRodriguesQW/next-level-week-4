@@ -7,7 +7,7 @@ import styles from '../../styles/pages/Viewer.module.css'
 import {ViewerProfile} from '../../components/ViewerProfile'
 
 import {User} from '../api/database'
-
+import {propsData} from '../index'
 interface ViewerProps {
   user: User;
 }
@@ -18,12 +18,12 @@ interface userStatusLabelsProps {
 
 export default function Viewer(props: ViewerProps) {
   
-  const {userProfile, userData, userSettings} = props.user ?? {}
+  const {userProfile, userData, userSettings} = props.user ?? {} as propsData
 
   return (
     <div className={styles.viewerContainer}>
       <div className={styles.viewerContent}>
-        <ViewerProfile props={{...userProfile, ...userData, ...userSettings}} />
+        <ViewerProfile props={{userProfile, userData, userSettings}} />
         <button className={styles.transferButton}>Transferir</button>
       </div>
     </div>
