@@ -13,7 +13,7 @@ export function LevelUpModal() {
     <button type="button"
     onClick={closeUpLevelModal}
     >
-      <img src="icons/close.svg" alt="Fechar modal" />
+      <img alt="Fechar modal" src="icons/close.svg"/>
     </button>
     </div>
     </div>

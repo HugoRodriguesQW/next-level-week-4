@@ -14,7 +14,7 @@ export function OfflineStatus(){
       <div className={styles.OffLineStatusContent}></div>
     </div>
 
-    <img className={styles.hidenOfflineIcon} src="/icons/offline.svg" />
+    <img className={styles.hidenOfflineIcon} alt="offline" src="/icons/offline.svg" />
     </>
   )
 }
