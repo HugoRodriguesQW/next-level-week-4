@@ -18,7 +18,7 @@ export function Profile() {
       <div>
         <strong>{username}</strong>
         <p>
-          <img src="/icons/level.svg" alt="Level" />
+          <img alt="Level" src="/icons/level.svg"/>
           Level {level}
         </p>
       </div>

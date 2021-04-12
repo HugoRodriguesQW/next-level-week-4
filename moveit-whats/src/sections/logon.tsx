@@ -16,16 +16,16 @@ export function Logon() {
     <div className={styles.overlay}>
 
     <div className={styles.LogonPageContainer}>
-      <img src="logon-logo.svg" alt="MoveIt" />
+      <img  alt="Moveit" src="logon-logo.svg"/>
 
       <section>
         <strong>Bem-vindo</strong>
         <div className={styles.description}>
-          <img src="/icons/github.svg" alt="Github" />
+          <img alt="Github" src="/icons/github.svg"/>
           <p>Faça login com seu Github para continuar</p>
         </div>
         <button type="button" onClick={handleGithubLogin}>
-          <img src="icons/login_arrow.svg" alt="Login" />
+          <img alt="Login" src="icons/login_arrow.svg"/>
         </button>
       </section>
     </div>
