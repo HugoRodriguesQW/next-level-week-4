@@ -10,6 +10,7 @@ let cachedDb:Db = null
 let databaseClient:MongoClient = null
 
 export interface User {
+  _id?: {};
   userProfile: {
     [profileData: string]: any
   };
@@ -58,18 +59,18 @@ export const database = {
     return user ?? null
 
   },
-  async getByName (identy: {username?: string}) {
-    if (!identy.username) return null
+  async getByName ({username}: {username: string}) {
+    if (!username) return null
 
     const user: User = await cachedDb.collection('subscribers')?.findOne(
-      {'userProfile.username': new RegExp("^" + identy.username.toLowerCase(), "i")},
+      {'userProfile.username': new RegExp("^" + username.toLowerCase(), "i")},
       { projection: {
         'userProfile.username': 1,
         'userProfile.userImage': 1,
         'userSettings.hideProfileImage': 1,
         'userData': 1
       }})
-    
+      
     return user ?? null
   },
   async create ({user}: {user?: User}){
