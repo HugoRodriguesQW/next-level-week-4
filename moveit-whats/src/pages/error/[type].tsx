@@ -1,5 +1,4 @@
 import {GetServerSideProps} from 'next'
-import { database } from './api/database';
 import {useEffect} from 'react'
 
 import styles from '../../styles/pages/Error.module.css'
