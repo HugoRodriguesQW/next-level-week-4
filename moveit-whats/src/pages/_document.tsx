@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
           <meta property="og:image" content="https://moveit.hugorodrigues.ml/banner.png"/>
           <meta property="og:image:type" content="image/png"/>
           <meta property="og:image:width" content="1200"/>
-          <meta property="og:image:height" content="630"/>
+          <meta property="og:image:height" content="628"/>
 
           <meta name="twitter:url" content="https://moveit.hugorodrigues.ml/"/>
           <meta name="twitter:card" content="summary_large_image"/>
