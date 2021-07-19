@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 
-
 export function getCredentials(){
   dotenv.config()
   return {

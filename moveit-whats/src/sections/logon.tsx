@@ -2,12 +2,13 @@ import styles from '../styles/pages/Logon.module.css'
 import { useContext } from 'react'
 import { userContext } from '../contexts/UserContext'
 
+export function handleGithubLogin() {
+  window.location.assign("/api/request")
+}
+
 export function Logon() {
 
   const {currentPage} = useContext(userContext)
-  function handleGithubLogin() {
-    window.location.assign("/api/request")
-  }
 
 
   return (

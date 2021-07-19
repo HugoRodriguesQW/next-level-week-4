@@ -2,10 +2,6 @@
   "name": "moveit",
   "description": "Um app incrível criado durante a Next Level Week 4 em ReactJS.",
   "version": "0.1.9",
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/HugoRodriguesQW/next-level-week-4/blob/main/LICENSE"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/HugoRodriguesQW/next-level-week-4.git"
@@ -14,14 +10,12 @@
     "url": "https://github.com/HugoRodriguesQW/next-level-week-4/issues"
   },
   "homepage": "https://moveit.hugorodrigues.ml",
-  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "ssri": ">=8.0.1",
     "@babel/core": "^7.0.0",
     "@types/mongodb": "^3.6.10",
     "@vercel/node": "^1.9.0",
@@ -33,6 +27,7 @@
     "next-pwa": "^5.0.6",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "ssri": ">=8.0.1",
     "webpack": "4.4.0"
   },
   "devDependencies": {

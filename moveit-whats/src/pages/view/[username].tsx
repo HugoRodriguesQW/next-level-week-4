@@ -8,6 +8,8 @@ import {ViewerProfile} from '../../components/ViewerProfile'
 
 import {User} from '../api/database'
 import {propsData} from '../index'
+import { handleGithubLogin } from '../../sections/logon';
+
 interface ViewerProps {
   user: User;
 }
@@ -24,7 +26,7 @@ export default function Viewer(props: ViewerProps) {
     <div className={styles.viewerContainer}>
       <div className={styles.viewerContent}>
         <ViewerProfile props={{userProfile, userData, userSettings}} />
-        <button className={styles.transferButton}>Transferir</button>
+        <button className={styles.loginButton} onClick={handleGithubLogin}>Crie sua conta</button>
       </div>
     </div>
   )

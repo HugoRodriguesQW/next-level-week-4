@@ -18,7 +18,7 @@
   box-shadow: 0 0 10px 10px rgba(0,0,0,0.05);
 }
 
-.viewerContainer .transferButton {
+.viewerContainer .loginButton {
     position: absolute;
     bottom: .8rem;
     right: .8rem;
@@ -31,7 +31,7 @@
     transition: .1s;
 }
 
-.viewerContainer .transferButton:hover {
+.viewerContainer .loginButton:hover {
   background: var(--blue-dark);
 }
 
@@ -40,7 +40,7 @@
     max-width: calc(100vw - 6rem);
   }
   
-  .viewerContainer .transferButton {
+  .viewerContainer .loginButton {
     width: calc(100% - 1.4rem);
   }
 
