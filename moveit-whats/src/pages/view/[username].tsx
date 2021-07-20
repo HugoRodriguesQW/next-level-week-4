@@ -26,7 +26,7 @@ export default function Viewer(props: ViewerProps) {
     <div className={styles.viewerContainer}>
       <div className={styles.viewerContent}>
         <ViewerProfile props={{userProfile, userData, userSettings}} />
-        <button className={styles.loginButton} onClick={handleGithubLogin}>Crie sua conta</button>
+        <button className={styles.loginButton} onClick={handleGithubLogin}>Início</button>
       </div>
     </div>
   )

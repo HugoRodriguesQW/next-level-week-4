@@ -84,6 +84,15 @@
   background: var(--white);
   padding: 1.3rem 2.8rem;
   border-radius: 5px;
+
+  transition: .2s;
+
+  cursor:pointer;
+}
+
+.whiteBackground:hover {
+  transform: scale(1.01);
+  background: var(--gray-line);
 }
 
 .configButtonContainer {

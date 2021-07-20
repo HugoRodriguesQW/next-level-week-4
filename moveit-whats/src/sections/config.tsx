@@ -21,7 +21,9 @@ export function Config () {
         <section>
           <div>
             <p>Conta</p>
-            <div className={styles.whiteBackground}>
+            <div className={styles.whiteBackground} 
+            onClick={()=>{window.open(`${window.location.origin}/view/${username}`)}}
+            >
               <Profile />
             </div>
           </div>
