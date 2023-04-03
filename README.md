@@ -16,6 +16,12 @@
 <img src="https://img.shields.io/github/last-commit/HugoRodriguesQW/next-level-week-4"/>
 </p>
 
+---
+
+<img src="https://via.placeholder.com/15/ff0c00/000000?text=+" width="1.1%" > **Erro conhecido:**  O Login via Github parou de funcionar 
+
+----
+
 ## <span><img src="https://github.com/HugoRodriguesQW/next-level-week-4/blob/main/moveit-whats/public/favicon.png" width="20px" /></span> Move.it - Next Level Week 4 - Trilha ReactJS
 
 
@@ -91,7 +97,7 @@
   </details>
 
  ### Para visualizar 🖥️:
- Acesse [https://moveit.hugorodrigues.ml/](https://moveit.hugorodrigues.ml/) para acessar a aplicação.
+ Acesse [https://moveit-hugorodriguesqw.vercel.app/](https://moveit-hugorodriguesqw.vercel.app/) para acessar a aplicação.
 
  
  ### Para iniciar 🚀:
